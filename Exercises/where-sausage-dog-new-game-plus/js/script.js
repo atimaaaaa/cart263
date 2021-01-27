@@ -1,14 +1,20 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Where's Sausage Dog Nww game Plus Activity
+Atima Ng
 
-Here is a description of this template p5 project.
+Find the sausage dog!
 **************************************************/
 
 // setup()
 //
 // Description of setup() goes here.
 "use strict";
+
+//Current initial state
+let state = `simulation`;
+
+//Set initial timer
+let timer = 15; // 15 seconds
 
 const NUM_ANIMAL_IMAGES = 10;
 const NUM_ANIMALS = 100;
@@ -45,12 +51,81 @@ function setup() {
 
 function draw() {
   background(0, 255, 0);
+
+  if (state === `title`) {
+    title();
+  }
+  if (state === `simulation`) {
+    simulation();
+  }
+  if (state === `win`) {
+    win();
+  }
+  if (state === `lose`) {
+    lose();
+  }
+}
+
+function title() {
+  displayText(`Save Sausage dog!
+    Press anywhere to continue.`);
+}
+
+function simulation() {
+  updateAll();
+  displayTimer();
+  if (timer === 0) {
+    state = `lose`;
+  }
+}
+
+function updateAll() {
+  updateAnimals();
+  sausageDog.update();
+}
+function updateAnimals() {
   for (let i = 0; i < animals.length; i++) {
     animals[i].update(); //update is referencing the Animals class
   }
-  sausageDog.update();
+}
+
+function win() {
+  displayText(`WEINER :-)
+    Are you able to find him again?`);
+}
+
+function lose() {
+  displayText(`LOSER :(
+    Try to find him again!`);
 }
 
 function mousePressed() {
-  sausageDog.mousePressed();
+  if (state === `title`) {
+    state = `simulation`;
+  } else if (state === `simulation`) {
+    sausageDog.mousePressed();
+    set;
+    state = `win`;
+  }
+}
+
+function displayTimer() {
+  push();
+  textSize(32);
+  fill(0);
+  text(`${timer} seconds left`, width - 400, height - 800);
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer--;
+  }
+  pop();
+}
+
+// displayText() displays message in the center of the createCanvas
+function displayText(message) {
+  push();
+  fill(255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text(message, width / 2, height / 2);
+  pop();
 }
