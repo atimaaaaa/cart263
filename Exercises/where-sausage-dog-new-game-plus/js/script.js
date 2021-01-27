@@ -19,44 +19,44 @@ let timer = 15; // 15 seconds
 //Set initial bark sound.
 let barkSFX = undefined;
 
-const NUM_ANIMAL_IMAGES = 10;
-const NUM_ANIMALS = 100;
+const NUM_CHARACTER_IMAGES = 4;
+const NUM_CHARACTERS = 100;
 
-let animalImages = [];
-let animals = [];
+let characterImages = [];
+let characters = [];
 
-let sausageDogImage = undefined;
-let sausageDog = undefined;
+let waldoImage = undefined;
+let waldo = undefined;
 
 function preload() {
   barkSFX = loadSound(`assets/sounds/bark.wav`);
 
-  for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
-    let animalImage = loadImage(`assets/images/animal${i}.png`);
-    animalImages.push(animalImage); // Puts animalImage into the array. push adds to the array
+  for (let i = 0; i < NUM_CHARACTER_IMAGES; i++) {
+    let characterImage = loadImage(`assets/images/character${i}.png`);
+    characterImages.push(characterImage); // Puts Image into the array. push adds to the array
   }
 
-  sausageDogImage = loadImage(`assets/images/sausage-dog.png`);
+  waldoImage = loadImage(`assets/images/waldo.png`);
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let i = 0; i < NUM_ANIMALS; i++) {
+  for (let i = 0; i < NUM_CHARACTERS; i++) {
     let x = random(0, width);
     let y = random(0, height);
-    let animalImage = random(animalImages); //Loads from animalImages array
-    let animal = new Animal(x, y, animalImage);
-    animals.push(animal); // Loads 100 images at random position
+    let characterImage = random(characterImages); //Loads from animalImages array
+    let character = new Character(x, y, characterImage);
+    characters.push(character); // Loads 100 images at random position
   }
 
   let x = random(0, width);
   let y = random(0, height);
-  sausageDog = new SausageDog(x, y, sausageDogImage);
+  waldo = new Waldo(x, y, waldoImage);
 }
 
 // Draws
 function draw() {
-  background(0, 255, 0);
+  background(255, 0, 0);
 
   if (state === `title`) {
     title();
@@ -74,30 +74,30 @@ function draw() {
 
 // Title state.
 function title() {
-  displayText(`Save Sausage dog!
+  displayText(`Where's Waldo?
     Press anywhere to continue.`);
 }
 
 // Simulation state.
 function simulation() {
-  updateAnimals();
+  updateCharacters();
   displayTimer();
-  if (timer === 0 && !sausageDog.found) {
+  if (timer === 0 && !waldo.found) {
     state = `lose`;
   }
 }
 
-// Updates all animals to a random position
-function updateAnimals() {
-  for (let i = 0; i < animals.length; i++) {
-    animals[i].update(); //update is referencing the Animals class
+// Updates all character to a random position
+function updateCharacters() {
+  for (let i = 0; i < characters.length; i++) {
+    characters[i].update(); //update is referencing the character class
   }
-  sausageDog.update();
+  waldo.update();
 }
 
 //Win state.
 function win() {
-  displayText(`WEINER :-)
+  displayText(`WALDO HAS FOUND!
     Are you able to find him again?`);
 }
 
@@ -112,8 +112,8 @@ function mousePressed() {
   if (state === `title`) {
     state = `simulation`;
   } else if (state === `simulation`) {
-    sausageDog.mousePressed();
-    if (sausageDog.found) {
+    waldo.mousePressed();
+    if (waldo.found) {
       playBarkSFX();
       setTimeout(function() {
         state = `win`;
@@ -133,13 +133,10 @@ function playBarkSFX() {
 function displayTimer() {
   push();
   textSize(32);
-  fill(0);
-  text(
-    `${timer} seconds to
-find sausage dog`,
-    width - 400,
-    height - 800
-  );
+  fill(255);
+  textAlign(CENTER);
+  text(`${timer} seconds to find Waldo`,
+    width /2, height/2);
   if (frameCount % 60 == 0 && timer > 0) {
     timer--;
   }
@@ -149,7 +146,7 @@ find sausage dog`,
 // displayText() displays message in the center of the createCanvas
 function displayText(message) {
   push();
-  fill(255);
+  fill(0);
   textSize(32);
   textAlign(CENTER, CENTER);
   text(message, width / 2, height / 2);
