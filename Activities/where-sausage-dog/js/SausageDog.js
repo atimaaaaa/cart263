@@ -1,0 +1,1 @@
+class SausageDog extends Animal {}
