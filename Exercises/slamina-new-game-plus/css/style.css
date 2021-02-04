@@ -1,4 +1,16 @@
+/****************
+
+description of any css used. Mostly used to center the canvas.
+
+****************/
+
+
 body {
   padding: 0;
   margin: 0;
+  display:grid;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+  overflow: hidden;
 }

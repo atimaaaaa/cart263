@@ -1,15 +1,13 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Exercise 2: Slaminaaaaaa
+Atima Ng
 
-Here is a description of this template p5 project.
+A guessing game where the user has to guess the name of an animal when it is said backwards.
 **************************************************/
 
-// setup()
-//
-// Description of setup() goes here.
 "use strict";
 
+//An array with all possible animals
 const animals = [
   "aardvark",
   "alligator",
@@ -147,11 +145,53 @@ const animals = [
   "zebra"
 ];
 
+//Store animals and current answer.
 let currentAnimal = ``;
 let currentAnswer = ``;
 
+//Current state
+let state = `title`; // Possible states: title, instructionScreen and simulation
+let simulationState = ``; //Possible states: ``, success, fail, play
+
+//Store instructions for the states.
+const TITLE = `Do you know your animals?
+
+Press any key to continue`;
+
+const INSTRUCTIONS = `Guess the animal that is said backwards
+by saying "I think it is..."
+
+Press any key to continue`;
+
+//Set initial timer
+let timer = 15; // 15 SECONDS TIMER
+
+//Set spoken responses
+const goodAnswerReply = [`Good job!`, `Keep at it!`, `Woohoo!`, `Yes girl`];
+const wrongAnswerReply = [
+  `Wrong!`,
+  `Try again!`,
+  `I'm getting angry!`,
+  `How could you think that?`,
+  `Boo!`,
+  `You stink!`
+];
+
+//Set initial sound.
+let wrongSFX = undefined;
+
+//preload()
+//
+//Load sounds.
+function preload() {
+  wrongSFX = loadSound(`assets/sounds/wrong.mp3`);
+}
+
+//setup()
+//
+//Setups the canvas
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(700, 700);
 
   if (annyang) {
     let commands = {
@@ -168,25 +208,128 @@ function setup() {
 
 // draw()
 //
-// Description of draw() goes here.
+// keep track of the current state.
 function draw() {
-  backgroud(0);
-  if (currentAnswer === currentAnimal) {
-    fill(0, 255, 0); //green
-  } else {
-    fill(255, 0, 0);
+  background(0, 0, 255);
+  currentState();
+}
+
+function currentState() {
+  if (state === `title`) {
+    title();
+  } else if (state === `instructionScreen`) {
+    instructionScreen();
+  } else if (state === `simulation`) {
+    simulation();
   }
-  text(currentAnswer, width / 2, height / 2);
+}
+
+function title() {
+  push();
+  fill(255);
+  textSize(24);
+  text(TITLE, width / 2, height / 2);
+  pop();
+}
+
+function instructionScreen() {
+  push();
+  fill(255);
+  textSize(24);
+  text(INSTRUCTIONS, width / 2, height / 2);
+  pop();
+}
+
+function simulation() {
+  background(0);
+  displayTimer();
+  //If player answers correctly
+  if (simulationState === `success`) {
+    text(currentAnimal, width / 2, height / 2);
+  }
+  //If player answers incorrectly.
+  else if (simulationState === `fail`) {
+    text(currentAnimal, width / 2, height / 2);
+  }
+}
+
+function displayTimer() {
+  if (simulationState === `play`) {
+    push();
+    fill(255, 0, 255);
+    text(`${timer} seconds`, width / 2, height / 5);
+    pop();
+    if (frameCount % 60 == 0 && timer > 0) {
+      timer--;
+    }
+  }
+  if (timer === 0) {
+    fail();
+    playWrongSFX();
+  }
+}
+
+function fail() {
+  push();
+  fill(255, 0, 0);
+  background(255);
+  text(`YOU STINK`, width / 2, height / 2);
+  pop();
+}
+
+function playWrongSFX() {
+  if (!wrongSFX.isPlaying()) {
+    wrongSFX.play();
+  }
+}
+
+function keyPressed() {
+  if (state === `title`) {
+    state = `instructionScreen`;
+  } else if (state === `instructionScreen`) {
+    state = `simulation`;
+  }
 }
 
 function mousePressed() {
-  currentAnimal = random(animals);
-  let reverseAnimal = reverseString(currentAnimal);
-  responsiveVoice.speak(reverseAnimal);
+  if (state === `simulation`) {
+    currentAnimal = random(animals);
+    let reverseAnimal = reverseString(currentAnimal);
+    responsiveVoice.speak(reverseAnimal);
+    timer = 15;
+    simulationState = `play`;
+  }
 }
 
 function guessAnimal(animal) {
   currentAnswer = animal.toLowerCase(); // converts animal name to lowercase
+  checkAnswer();
+}
+
+function checkAnswer() {
+  if (currentAnswer === currentAnimal) {
+    fill(0, 255, 0); //green
+    text(currentAnswer, width / 2, height / 2);
+    simulationState = `success`;
+  } else {
+    fill(255, 0, 0); //red
+    text(currentAnswer, width / 2, height / 2);
+    simulationState = `fail`;
+  }
+  showAnimalAnswer();
+}
+
+//Checks and displays right or wrong answer.
+function showAnimalAnswer() {
+  //If successful, a voice will yell a positive command.
+  if (simulationState === `success`) {
+    let goodAnswer = random(goodAnswerReply);
+    responsiveVoice.speak(goodAnswer);
+    //If unsuccessful, a voice will yell a negative command.
+  } else if (simulationState === `fail`) {
+    let badAnswer = random(wrongAnswerReply);
+    responsiveVoice.speak(badAnswer);
+  }
 }
 
 /**
