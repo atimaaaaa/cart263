@@ -1,3 +1,3 @@
-# Template p5 project
+Slaminaaaaaa
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+The exercise file for the Slamina exercise. Test you abilities to guess animal names spoken backwards!

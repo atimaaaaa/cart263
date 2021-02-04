@@ -149,17 +149,17 @@ const animals = [
 let currentAnimal = ``;
 let currentAnswer = ``;
 
-//Current state
+//Keep track of the current current state
 let state = `title`; // Possible states: title, instructionScreen and simulation
 let simulationState = ``; //Possible states: ``, success, fail, play
 
 //Store instructions for the states.
-const TITLE = `Do you know your animals?
+const TITLE = `Do you have magical powers?
 
 Press any key to continue`;
 
-const INSTRUCTIONS = `Guess the animal that is said backwards
-by saying "I think it is..."
+const INSTRUCTIONS = `Test you abilities to guess animals names backwards.
+Answer by saying "I think it is..."
 
 Press any key to continue`;
 
@@ -193,6 +193,7 @@ function preload() {
 function setup() {
   createCanvas(700, 700);
 
+  // Setup the annyang commands
   if (annyang) {
     let commands = {
       "I think it is *animal": guessAnimal
@@ -210,10 +211,11 @@ function setup() {
 //
 // keep track of the current state.
 function draw() {
-  background(0, 0, 255);
+  background(0, 0, 255); // Blue background
   currentState();
 }
 
+//Keep track of the current state the player is in.
 function currentState() {
   if (state === `title`) {
     title();
@@ -224,6 +226,7 @@ function currentState() {
   }
 }
 
+//The title state.
 function title() {
   push();
   fill(255);
@@ -232,6 +235,7 @@ function title() {
   pop();
 }
 
+//The instructionScreen state.
 function instructionScreen() {
   push();
   fill(255);
@@ -240,19 +244,21 @@ function instructionScreen() {
   pop();
 }
 
+//The simulation state
 function simulation() {
   background(0);
   displayTimer();
-  //If player answers correctly
+  //If player answers correctly, the animal answer will be displayed.
   if (simulationState === `success`) {
     text(currentAnimal, width / 2, height / 2);
   }
-  //If player answers incorrectly.
+  //If player answers incorrectly, the animal answer will be displayed.
   else if (simulationState === `fail`) {
     text(currentAnimal, width / 2, height / 2);
   }
 }
 
+//displays the timer in the simulation screen
 function displayTimer() {
   if (simulationState === `play`) {
     push();
@@ -269,6 +275,7 @@ function displayTimer() {
   }
 }
 
+//The fail state during the simulation.
 function fail() {
   push();
   fill(255, 0, 0);
@@ -277,12 +284,14 @@ function fail() {
   pop();
 }
 
+//Plays the wrongSFX when the player loses.
 function playWrongSFX() {
   if (!wrongSFX.isPlaying()) {
     wrongSFX.play();
   }
 }
 
+//To control the state switches.
 function keyPressed() {
   if (state === `title`) {
     state = `instructionScreen`;
@@ -291,21 +300,24 @@ function keyPressed() {
   }
 }
 
+// To start te simulation
 function mousePressed() {
   if (state === `simulation`) {
     currentAnimal = random(animals);
     let reverseAnimal = reverseString(currentAnimal);
     responsiveVoice.speak(reverseAnimal);
-    timer = 15;
+    timer = 15; // Resets timer to 15 when player doesn't know the answer.
     simulationState = `play`;
   }
 }
 
+// Keeps track of the current animal guessed.
 function guessAnimal(animal) {
   currentAnswer = animal.toLowerCase(); // converts animal name to lowercase
   checkAnswer();
 }
 
+//Checks if the answer is correct or incorrect.
 function checkAnswer() {
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0); //green
@@ -319,7 +331,7 @@ function checkAnswer() {
   showAnimalAnswer();
 }
 
-//Checks and displays right or wrong answer.
+//Displays right or wrong answer.
 function showAnimalAnswer() {
   //If successful, a voice will yell a positive command.
   if (simulationState === `success`) {
