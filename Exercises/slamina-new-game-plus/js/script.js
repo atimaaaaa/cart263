@@ -167,7 +167,13 @@ Press any key to continue`;
 let timer = 15; // 15 SECONDS TIMER
 
 //Set spoken responses
-const goodAnswerReply = [`Good job!`, `Keep at it!`, `Woohoo!`, `Yes girl`];
+const goodAnswerReply = [
+  `Good job!`,
+  `Keep at it!`,
+  `Woohoo!`,
+  `Yes girl`,
+  `You're killing it!`
+];
 const wrongAnswerReply = [
   `Wrong!`,
   `Try again!`,
@@ -228,20 +234,12 @@ function currentState() {
 
 //The title state.
 function title() {
-  push();
-  fill(255);
-  textSize(24);
-  text(TITLE, width / 2, height / 2);
-  pop();
+  displayText(TITLE);
 }
 
 //The instructionScreen state.
 function instructionScreen() {
-  push();
-  fill(255);
-  textSize(24);
-  text(INSTRUCTIONS, width / 2, height / 2);
-  pop();
+  displayText(INSTRUCTIONS);
 }
 
 //The simulation state
@@ -329,6 +327,14 @@ function checkAnswer() {
     simulationState = `fail`;
   }
   showAnimalAnswer();
+}
+
+function displayText(string) {
+  push();
+  fill(255);
+  textSize(24);
+  text(string, width / 2, height / 2);
+  pop();
 }
 
 //Displays right or wrong answer.
