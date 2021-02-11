@@ -1,3 +1,8 @@
-# Template p5 project
+# Spy Profile Generattor New Game
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Atima Ng
+
+Generates a randomized spy profile for the user and password protects it.
+
+JSON files come from Dariusk corpora: https://github.com/dariusk/corpora/
+Background image source: https://www.shutterstock.com/video/clip-20197435-computer-hacker-sitting-dark-room-front-screens

@@ -29,11 +29,18 @@ let objectData;
 let tarotData;
 let artData;
 
+//Load image background image
+let hackerBg;
+
 function preload() {
+  //Load the data from JSON URLs
   instrumentData = loadJSON(INSTRUMENT_DATA_URL);
   objectData = loadJSON(OBJECT_DATA_URL);
   tarotData = loadJSON(TAROT_DATA_URL);
   artData = loadJSON(ART_DATA_URL);
+
+  //Load the hacker background image
+  hackerBg = loadImage(`assets/images/hacker.png`);
 }
 
 //Background COlor of the spy profile.
@@ -47,15 +54,26 @@ let screenBg = {
 // Description of setup() goes here.
 function setup() {
   //Create canvas
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(910, 480);
+
   //Load the data
   let data = JSON.parse(localStorage.getItem(PROFILE_DATA_KEY)); // Convert to object
   //Check if there was data to load
   if (data) {
+    //Password protect page
     let password = prompt(`What's your password, mate?`);
     if (password === data.password) {
-      //Not spyProfile cause not populated yet...
       setSpyProfile(data);
+      //Make the computer speak
+      responsiveVoice.speak(
+        `HACKER. HACKER. HACKER. HACKER.`,
+        `UK English Male`,
+        {
+          pitch: 0.25,
+          rate: 0.5,
+          volume: 1
+        }
+      );
     }
   } else {
     generateSpyProfile();
@@ -89,6 +107,7 @@ function keyPressed() {
     localStorage.removeItem(PROFILE_DATA_KEY);
   }
 }
+
 // draw()
 //
 // Description of draw() goes here.
@@ -102,13 +121,17 @@ function draw() {
   Secret Weapon: ${spyProfile.secretWeapon}
   Favorite Art Movement: ${spyProfile.favoriteArtMovement}
 
-  Press the C key if you forgot your password, FOOL`;
+  Forgot password? Press C
+  to reinitialize!`;
 
   push();
   textFont(`Courier, monospace`);
-  textSize(24);
+  textSize(10);
   textAlign(LEFT, TOP);
   fill(0);
-  text(profile, 100, 100);
+  text(profile, 580, 65);
   pop();
+
+  //Load background image
+  image(hackerBg, 0, 0);
 }
