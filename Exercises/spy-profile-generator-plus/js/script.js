@@ -29,7 +29,7 @@ function preload() {
   tarotData = loadJSON(TAROT_DATA_URL);
 }
 
-//Background color of the spy profile.
+//Background COlor of the spy profile.
 let screenBg = {
   r: 0,
   g: 255,
