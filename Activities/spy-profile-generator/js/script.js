@@ -4,6 +4,7 @@ Atima Ng
 
 Generates a randomised spy profile for the user and password protects it.
 **************************************************/
+// The spy profile while the program is running
 let spyProfile = {
   name: `** REDACTED **`,
   alias: `** REDACTED **`,
@@ -11,41 +12,54 @@ let spyProfile = {
   password: `** REDACTED **`
 };
 
-let instrumentData = undefined;
-let objectData = undefined;
-let tarotData = undefined;
+//URL's to JSON data
+const INSTRUMENT_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`;
+const OBJECT_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`;
+const TAROT_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`;
+const PROFILE_DATA_KEY = `spy-profile-data`;
+
+//Variables to store JSON data for generating profile
+let instrumentData;
+let objectData;
+let tarotData;
 
 function preload() {
-  instrumentData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`
-  );
-  objectData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
-  );
-  tarotData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
-  );
+  instrumentData = loadJSON(INSTRUMENT_DATA_URL);
+  objectData = loadJSON(OBJECT_DATA_URL);
+  tarotData = loadJSON(TAROT_DATA_URL);
 }
+
+//Background COlor of the spy profile.
+let screenBg = {
+  r: 0,
+  g: 255,
+  b: 0
+};
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
+  //Create canvas
   createCanvas(windowHeight, windowHeight);
-  let data = JSON.parse(localStorage.getItem(`spy-profile-data`)); // Convert to object
-
-  if (data !== null) {
+  //Load the data
+  let data = JSON.parse(localStorage.getItem(PROFILE_DATA_KEY)); // Convert to object
+  //Check if there was data to load
+  if (data) {
     let password = prompt(`What's your password, mate?`);
     if (password === data.password) {
-      //Not spyProfile cause not populated yet... {
-      // If there is data saved {
-      spyProfile.name = data.name;
-      spyProfile.alias = data.alias;
-      spyProfile.secretWeapon = data.secretWeapon;
-      spyProfile.password = data.password; // Do not write data = spyProfile, does not work
+      //Not spyProfile cause not populated yet...
+      setSpyProfile(data);
     }
   } else {
     generateSpyProfile();
   }
+}
+
+function setSpyProfile(data) {
+  spyProfile.name = data.name;
+  spyProfile.alias = data.alias;
+  spyProfile.secretWeapon = data.secretWeapon;
+  spyProfile.password = data.password; // Do not write data = spyProfile, does not work
 }
 
 function generateSpyProfile() {
@@ -57,14 +71,14 @@ function generateSpyProfile() {
   let card = random(tarotData.tarot_interpretations);
   spyProfile.password = random(card.keywords);
 
-  localStorage.setItem(`spy-profile-data`, JSON.stringify(spyProfile)); //To save the profile
+  localStorage.setItem(PROFILE_DATA_KEY, JSON.stringify(spyProfile)); //To save the profile
 }
 
 // draw()
 //
 // Description of draw() goes here.
 function draw() {
-  background(0, 255, 0);
+  background(screenBg.r, screenBg.g, screenBg.b); //Green background
 
   let profile = `** SPY PROFILE **
   Name: ${spyProfile.name}
