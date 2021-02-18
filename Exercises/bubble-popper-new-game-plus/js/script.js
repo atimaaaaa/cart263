@@ -2,12 +2,11 @@
 Bubble Popper++ activity
 Atima Ng
 
-Pop bubble swith your finder.
+Pop bubbles with your ring and index finder.
 Bubble pop SFX: https://freesound.org/people/TheBuilder15/sounds/411462/
 **************************************************/
-let video = undefined;
-
 //Store the handpose.
+let video = undefined;
 let handpose = undefined;
 
 //Current set of predictions
@@ -28,10 +27,11 @@ let bubbleData = {
 //Load pop sound effect
 let popSFX = undefined;
 
-//Load sounds sound effects.
+//preLoad sounds sound effects.
 function preload() {
   popSFX = loadSound(`assets/sounds/pop.wav`);
 }
+
 // setup()
 //
 // Description of setup() goes here.
@@ -83,63 +83,98 @@ function draw() {
   //Check if there is a hand.
   if (predictions.length > 0) {
     let hand = predictions[0];
+    //Fingers
     let index = hand.annotations.indexFinger;
+    let ring = hand.annotations.ringFinger;
+    //Array for tip and base fingers
     let tip = index[3];
     let base = index[0];
+    let ringTip = ring[3];
+    let ringBase = ring[0];
+    //Tip position for the array for fingers
     let tipX = tip[0];
     let tipY = tip[1];
+    let ringTipX = ringTip[0];
+    let ringTipY = ringTip[1];
+    //Base position for the array for fingers
     let baseX = base[0];
     let baseY = base[1];
-    //Pin
+    let ringBaseX = ringBase[0];
+    let ringBaseY = ringBase[1];
+    //Draws pin - index
     push();
     noFill();
     stroke(255, 255, 255);
     strokeWeight(2);
     line(baseX, baseY, tipX, tipY);
     pop();
-    //Draws red dot on the pin
+    //Draws pin - ring
+    push();
+    noFill();
+    stroke(255, 255, 255);
+    strokeWeight(2);
+    line(ringBaseX, ringBaseY, ringTipX, ringTipY);
+    pop();
+    //Pin dot - index
     push();
     noStroke();
     fill(255, 0, 0);
     ellipse(baseX, baseY, 20, 20);
     pop();
-
-    //Checks bubble popping
+    //Pin dot - ring
+    push();
+    noStroke();
+    fill(255, 0, 0);
+    ellipse(ringBaseX, ringBaseY, 20, 20);
+    pop();
+    //Checks overlap finger tips and bubble
     let d = dist(tipX, tipY, bubble.x, bubble.y);
-    if (d < bubble.size / 2) {
+    let j = dist(ringTipX, ringTipY, bubble.x, bubble.y);
+    if (d < bubble.size / 2 || j < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
       currentScore++;
-      //Add SFX to the bubble pop.
+      //Plays SFX to the overlap.
       if (!popSFX.isPlaying()) {
         popSFX.play();
       }
     }
   }
-  //Bubble movement
+  bubbleMovement();
+  displayBubble();
+  scoreUpdate();
+}
+
+//Keeps track of the bubble movement
+function bubbleMovement() {
   bubble.x += bubble.vx;
   bubble.y += bubble.vy;
+  //Bubble resets when reaches the top
   if (bubble.y < 0) {
     bubble.x = random(width);
     bubble.y = height;
   }
-  //Faster bubbles after 5 bubblepops
+  //Added difficulty: Faster bubbles.
   if (currentScore > fasterSpeedScore) {
     bubble.vy -= 0.05;
   }
+}
 
-  //Display bubble
+//Displays the bubble in the simulation
+function displayBubble() {
   push();
   fill(0, 13, 200);
   ellipse(bubble.x, bubble.y, bubble.size);
   pop();
-  //If score defeats high score
+}
+
+function scoreUpdate() {
+  //New high score becomes the high score.
   if (currentScore > bubbleData.highScore) {
     bubbleData.highScore = currentScore;
     localStorage.setItem(`pop-data`, JSON.stringify(bubbleData));
   }
 }
-
 //Displays the player's score.
 function displayScore() {
   //Display current score
