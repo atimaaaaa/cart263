@@ -2,7 +2,7 @@
 Bubble Popper++ activity
 Atima Ng
 
-Pop bubbles with your ring and index finder.
+Pop bubbles with your ring and index finger.
 Bubble pop SFX: https://freesound.org/people/TheBuilder15/sounds/411462/
 **************************************************/
 //Store the handpose.
@@ -53,7 +53,7 @@ function setup() {
     predictions = results;
   });
 
-  //Bubble
+  //Bubble propreties
   bubble = {
     x: random(width),
     y: height,
