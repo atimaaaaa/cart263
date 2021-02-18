@@ -11,13 +11,19 @@ let handpose = undefined;
 let predictions = [];
 //Stores Bubble
 let bubble = undefined;
+//Track current score
+let currentScore = 0;
+//Store high score
+let gameData = {
+  highScore: 0 // Set high schore at 0 by default
+};
 
 // setup()
 //
 // Description of setup() goes here.
 //Store user's webcam
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(1000, 680);
   //Access user's webcam.
   video = createCapture(VIDEO);
   video.hide();
@@ -41,13 +47,30 @@ function setup() {
     vx: 0,
     vy: -2
   };
+  // loadData();
+  let data = JSON.parse(localStorage.getItem(`game-data`));
+  if (data !== null) {
+    //If there is data, replace it with current high score.
+    gameData = data;
+  }
 }
+
+// //Load high score data.
+// function loadData() {
+//   //Load high score data
+//   let data = JSON.parse(localStorage.getItem(`game-data`));
+//   if (data !== null) {
+//     //If there is data, replace it with current high score.
+//     gameData = data;
+//   }
+// }
 
 // draw()
 //
 // Description of draw() goes here.
 function draw() {
   background(0);
+  displayScore();
   //Check if there is a hand.
   if (predictions.length > 0) {
     let hand = predictions[0];
@@ -77,6 +100,7 @@ function draw() {
     if (d < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
+      currentScore++;
     }
   }
   //Bubble movement
@@ -90,5 +114,27 @@ function draw() {
   push();
   fill(0, 13, 200);
   ellipse(bubble.x, bubble.y, bubble.size);
+  pop();
+  //If score defeatsn high score
+  if (currentScore > gameData.highScore) {
+    gameData.highScore = currentScore;
+    localStorage.setItem(`game-data`, JSON.stringify(gameData));
+  }
+}
+
+//Displays the player's score.
+function displayScore() {
+  push();
+  fill(255);
+  textSize(500);
+  textAlign(CENTER, CENTER);
+  text(`${currentScore}`, width / 2, height / 2);
+  pop();
+
+  push();
+  fill(255);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  text(`High score: ${gameData.highscore}`, width / 2, height / 2 + 200);
   pop();
 }
