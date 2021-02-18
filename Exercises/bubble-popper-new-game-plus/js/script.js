@@ -1,29 +1,43 @@
 /**************************************************
-Bubble Popper activity
+Bubble Popper++ activity
 Atima Ng
 
-Pop bubble swith your finder
+Pop bubble swith your finder.
+Bubble pop SFX: https://freesound.org/people/TheBuilder15/sounds/411462/
 **************************************************/
 let video = undefined;
+
 //Store the handpose.
 let handpose = undefined;
+
 //Current set of predictions
 let predictions = [];
+
 //Stores Bubble
 let bubble = undefined;
+
 //Track current score
 let currentScore = 0;
+//Track mininum score until the game becomes harder.
+let fasterSpeedScore = 5;
+
 //Store high score
-let gameData = {
+let bubbleData = {
   highScore: 0 // Set high schore at 0 by default
 };
+//Load pop sound effect
+let popSFX = undefined;
 
+//Load sounds sound effects.
+function preload() {
+  popSFX = loadSound(`assets/sounds/pop.wav`);
+}
 // setup()
 //
 // Description of setup() goes here.
 //Store user's webcam
 function setup() {
-  createCanvas(1000, 680);
+  createCanvas(600, 480);
   //Access user's webcam.
   video = createCapture(VIDEO);
   video.hide();
@@ -47,23 +61,18 @@ function setup() {
     vx: 0,
     vy: -2
   };
-  // loadData();
-  let data = JSON.parse(localStorage.getItem(`game-data`));
-  if (data !== null) {
-    //If there is data, replace it with current high score.
-    gameData = data;
-  }
+  loadData();
 }
 
-// //Load high score data.
-// function loadData() {
-//   //Load high score data
-//   let data = JSON.parse(localStorage.getItem(`game-data`));
-//   if (data !== null) {
-//     //If there is data, replace it with current high score.
-//     gameData = data;
-//   }
-// }
+//Load high score data.
+function loadData() {
+  //Load high score data
+  let data = JSON.parse(localStorage.getItem(`pop-data`));
+  if (data !== null) {
+    //If there is data, replace it with current high score.
+    bubbleData = data;
+  }
+}
 
 // draw()
 //
@@ -101,6 +110,10 @@ function draw() {
       bubble.x = random(width);
       bubble.y = height;
       currentScore++;
+      //Add SFX to the bubble pop.
+      if (!popSFX.isPlaying()) {
+        popSFX.play();
+      }
     }
   }
   //Bubble movement
@@ -110,31 +123,37 @@ function draw() {
     bubble.x = random(width);
     bubble.y = height;
   }
+  //Faster bubbles after 5 bubblepops
+  if (currentScore > fasterSpeedScore) {
+    bubble.vy -= 0.05;
+  }
+
   //Display bubble
   push();
   fill(0, 13, 200);
   ellipse(bubble.x, bubble.y, bubble.size);
   pop();
-  //If score defeatsn high score
-  if (currentScore > gameData.highScore) {
-    gameData.highScore = currentScore;
-    localStorage.setItem(`game-data`, JSON.stringify(gameData));
+  //If score defeats high score
+  if (currentScore > bubbleData.highScore) {
+    bubbleData.highScore = currentScore;
+    localStorage.setItem(`pop-data`, JSON.stringify(bubbleData));
   }
 }
 
 //Displays the player's score.
 function displayScore() {
+  //Display current score
   push();
   fill(255);
   textSize(500);
   textAlign(CENTER, CENTER);
-  text(`${currentScore}`, width / 2, height / 2);
+  text(currentScore, width / 2, height / 2);
   pop();
-
+  //Display high score
   push();
   fill(255);
   textSize(30);
   textAlign(CENTER, CENTER);
-  text(`High score: ${gameData.highscore}`, width / 2, height / 2 + 200);
+  text(`High score: ${bubbleData.highScore}`, width / 2, height / 2 + 200);
   pop();
 }
