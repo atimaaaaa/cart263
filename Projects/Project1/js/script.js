@@ -11,6 +11,9 @@ let dog;
 let robots = [];
 let numRobots = 3;
 
+//Setup images used
+const NUM_ROBOT_IMAGES = 3;
+
 // // setup()
 // //
 // // Description of setup() goes here.
@@ -39,7 +42,7 @@ function setup() {
 // //
 // // Description of draw() goes here.
 function draw() {
-  background(0);
+  background(100);
   //Display dog.
   dog.display();
   dog.wrap();
