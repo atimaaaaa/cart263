@@ -10,7 +10,7 @@ Here is a description of this template p5 project.
 //
 //
 //Set the initial state
-let state = `title`;
+let state = `introduction`;
 let introState = 0;
 let gameStarted = false;
 
@@ -37,14 +37,24 @@ let subtitleColor = {
   b: 0
 };
 
+//Store name variables in
+let dogNamesData = undefined;
+const DOGS_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/dogs.json`;
+let displayName = "stranger...";
+// // preload
+// //
+// // Description of preload() goes here.
+function preload() {
+  dogNamesData = loadJSON(`assets/data/dogNames.json`);
+  dogTypeData = loadJSON(DOGS_DATA_URL);
+}
+
 // // setup()
 // //
 // // Description of setup() goes here.
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //Remove cursor
-  noCursor();
+
   //Main dog class
   let x = windowWidth / 2;
   let y = windowHeight / 2;
@@ -69,6 +79,8 @@ function draw() {
   //Call states
   if (state === `title`) {
     title();
+  } else if (state === `introduction`) {
+    introduction();
   } else if (state === `simulation`) {
     simulation();
   } else if (state === `win`) {
@@ -101,17 +113,22 @@ function displayTitle() {
   pop();
 }
 
-function displayText(string) {
+function introduction() {
+  background(0);
+
+  let randomDog = random(dogNamesData.dogs);
+  displayName = random(randomDog.name);
+
   push();
-  textAlign(CENTER);
-  textSize(32);
-  textFont(`Rockwell Std Condensed`);
-  // fill(255);
-  text(string, width / 2, height / 2);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(50);
+  text(`Welcome ${displayName}`, width / 2, height / 2);
   pop();
 }
 
 function simulation() {
+  noCursor();
   //Display dog.
   dog.display();
   dog.wrap();
@@ -121,6 +138,16 @@ function simulation() {
     robot.move();
     robot.display();
   }
+}
+
+function displayText(string) {
+  push();
+  textAlign(CENTER);
+  textSize(32);
+  textFont(`Rockwell Std Condensed`);
+  // fill(255);
+  text(string, width / 2, height / 2);
+  pop();
 }
 
 function keyPressed() {
