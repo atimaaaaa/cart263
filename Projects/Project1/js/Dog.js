@@ -10,10 +10,50 @@ class Dog {
     this.vy = 2;
     this.speed = 60;
     this.growSpeed = 0.25;
+    //Wrap
     this.borderLeft = 0;
     this.borderRight = width;
     this.borderTop = 0;
     this.borderBottom = height;
+    //Head
+    this.headWidth = 50;
+    this.headHeight = 60;
+    this.colorHead = {
+      r: 204,
+      g: 204,
+      b: 204
+    };
+    //Eyes
+    this.eyesSize = 10;
+    this.colorEyes = {
+      r: 153,
+      g: 204,
+      b: 255
+    };
+    //Mouth
+    this.mouthHeight = 22;
+    this.colorMouth = {
+      r: 225,
+      g: 225,
+      b: 225
+    };
+    //Ears
+    this.earsSize = 20;
+    this.earsWidth = 5;
+    this.earsHeight = 8;
+    this.colorEars = {
+      r: 240,
+      g: 240,
+      b: 240
+    };
+
+    //Nose
+    this.noseSize = 10;
+    this.colorNose = {
+      r: 255,
+      g: 204,
+      b: 204
+    };
   }
   //Dog movement
   move() {
@@ -44,10 +84,48 @@ class Dog {
 
   display() {
     push();
-    fill(255, 0, 0);
+    //Head
+    fill(this.colorHead.r, this.colorHead.g, this.colorHead.b);
     noStroke();
-    rectMode(RADIUS);
-    ellipse(this.x, this.y, this.size, this.size);
+    rect(this.x, this.y, this.headWidth, this.headHeight);
+    pop();
+    //Eyes
+    push();
+    fill(this.colorEyes.r, this.colorEyes.g, this.colorEyes.b);
+    noStroke();
+    rectMode(CENTER);
+    rect(this.x + 10, this.y + 25, this.eyesSize); //Left eye
+    rect(this.x + 40, this.y + 25, this.eyesSize); //Right eye
+    pop();
+    //Mouth
+    push();
+    fill(this.colorMouth.r, this.colorMouth.g, this.colorMouth.b);
+    noStroke();
+    rectMode(CENTER);
+    rect(this.x + 25, this.y + 50, this.headWidth, this.mouthHeight);
+    pop();
+    //Ears
+    push();
+    fill(this.colorEars.r, this.colorEars.g, this.colorEars.b);
+    noStroke();
+    ellipseMode(CENTER);
+    //Ear tips
+    ellipse(this.x + 10, this.y - 10, this.earsSize); //Left ear tips
+    ellipse(this.x + 40, this.y - 10, this.earsSize); //Right ear tips
+    rect(this.x + 7, this.y - 5, this.earsWidth, this.earsHeight); //Left ear
+    rect(this.x + 38, this.y - 5, this.earsWidth, this.earsHeight); //Right ear
+    pop();
+    //Nose
+    push();
+    fill(this.colorNose.r, this.colorNose.g, this.colorNose.b);
+    noStroke();
+    rectMode(CENTER);
+    rect(
+      this.x + this.headWidth / 2,
+      this.y + this.headHeight / 2 + 10,
+      this.noseSize
+    ); //Left eye
+
     pop();
   }
 

@@ -1,18 +1,29 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Isle of the Dogs
+Atima Ng
 
 Here is a description of this template p5 project.
 **************************************************/
 "use strict";
+
+//Setup initial variables
+//
+//
+//Set the initial state
+let state = `title`;
+let introState = 0;
+let gameStarted = false;
+
+//Store high score
+let treatsData = {
+  highScore: 0 // Set high score at 0 by default
+};
+
 //Main dog
 let dog;
 //Robot dogs
 let robots = [];
-let numRobots = 3;
-
-//Setup images used
-const NUM_ROBOT_IMAGES = 3;
+let numRobots = 2; //5?
 
 // // setup()
 // //
@@ -43,6 +54,46 @@ function setup() {
 // // Description of draw() goes here.
 function draw() {
   background(100);
+  //Call states
+  if (state === `title`) {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
+  } else if (state === `win`) {
+    // win();
+  } else if (state === `lose`) {
+    // lose();
+  }
+}
+
+function title() {
+  background(0);
+  //犬ヶ島 - display title
+  push();
+  textAlign(CENTER, CENTER);
+  fill(255, 0, 0);
+  textSize(400);
+  text(`犬ヶ島`, width / 2, height / 2);
+  pop();
+  //Isle of the Dogs - display title
+  push();
+  textAlign(CENTER, CENTER);
+  fill(255, 255, 0);
+  textSize(40);
+  text(`(Isle of the Dogs)`, width / 2, height / 2 + 250);
+  pop();
+}
+
+function displayText(string) {
+  push();
+  textAlign(CENTER);
+  textSize(32);
+  // fill(255);
+  text(string, width / 2, height / 2);
+  pop();
+}
+
+function simulation() {
   //Display dog.
   dog.display();
   dog.wrap();
