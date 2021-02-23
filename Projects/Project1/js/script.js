@@ -25,6 +25,18 @@ let dog;
 let robots = [];
 let numRobots = 2; //5?
 
+//Typography
+let titleColor = {
+  r: 255,
+  g: 0,
+  b: 0
+};
+let subtitleColor = {
+  r: 255,
+  g: 204,
+  b: 0
+};
+
 // // setup()
 // //
 // // Description of setup() goes here.
@@ -68,18 +80,23 @@ function draw() {
 
 function title() {
   background(0);
+  displayTitle();
+}
+
+function displayTitle() {
   //犬ヶ島 - display title
   push();
   textAlign(CENTER, CENTER);
-  fill(255, 0, 0);
+  fill(titleColor.r, titleColor.g, titleColor.b);
   textSize(400);
   text(`犬ヶ島`, width / 2, height / 2);
   pop();
   //Isle of the Dogs - display title
   push();
   textAlign(CENTER, CENTER);
-  fill(255, 255, 0);
-  textSize(40);
+  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
+  textSize(35);
+  textFont(`Rockwell Std Condensed`);
   text(`(Isle of the Dogs)`, width / 2, height / 2 + 250);
   pop();
 }
@@ -88,6 +105,7 @@ function displayText(string) {
   push();
   textAlign(CENTER);
   textSize(32);
+  textFont(`Rockwell Std Condensed`);
   // fill(255);
   text(string, width / 2, height / 2);
   pop();

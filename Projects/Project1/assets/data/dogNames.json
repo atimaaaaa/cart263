@@ -1,0 +1,30 @@
+{
+  "description_dogs": "Description of the main dogs in the movie Isle of the Dogs",
+  "dogs": {
+    "Nutmeg": {
+      "color": ["white"],
+      "breed": ["spot hound"],
+      "favorite treat": "good belly rub"
+    },
+    "Duke": {
+      "color": ["gray"],
+      "breed": ["husky"],
+      "favorite treat": "leftover steak"
+    },
+    "Gondo": {
+      "color": ["half grey half skin"],
+      "breed": ["Boston Terrier"],
+      "favorite treat": "orange peels"
+    },
+    "Boss": {
+      "color": ["brown"],
+      "breed": ["American Water Spaniel"],
+      "favorite treat": "fetching balls"
+    },
+    "Chief": {
+      "color": ["black"],
+      "breed": ["Oceanic sport hound"],
+      "favorite treat": "biting humans"
+    }
+  }
+}
