@@ -59,26 +59,20 @@ class Dog {
   move() {
     this.x += this.vx;
     this.y += this.vy;
-  }
-  //Check interraction with robot.
-  checkTouch(robot) {
-    let d = dist(this.x, this.y, robot.x, robot.y);
-    if (d < this.size / 2 + robot.size / 2) {
-      this.size += this.growSpeed;
-    }
+    //constrain
+    this.x = constrain(this.x, 0, width - this.headWidth);
+    this.y = constrain(this.y, 0, height - this.headHeight);
   }
 
-  //Wraps the dog to the canvas.
-  wrap() {
-    if (this.x >= this.borderRight) {
-      this.x = this.borderRight;
-    } else if (this.x <= this.borderLeft) {
-      this.x = this.borderLeft;
-    }
-    if (this.y >= this.borderBottom) {
-      this.y = this.borderBottom;
-    } else if (this.y <= this.borderTop) {
-      this.y = this.borderTop;
+  //Attempts to attack the robot  provided as a parameter
+  //If interaction succeeds, the score will add up and the robot dog will restart from the bottom
+  interactWith(robot) {
+    //Calculate the distance bwteen the dog and robot
+    let d = dist(this.x, this.y, robot.x, robot.y);
+    //if they overlap...
+    if (d < this.size / 2 + robot.headWidth / 2) {
+      //Add score if dog and robot overlap
+      robot.restart();
     }
   }
 

@@ -1,5 +1,5 @@
 /**************************************************
-Isle of the Dogs
+Isle of Dogs
 Atima Ng
 
 Here is a description of this template p5 project.
@@ -10,12 +10,13 @@ Here is a description of this template p5 project.
 //
 //
 //Set the initial state
-let state = `introduction`;
+let state = `simulation`;
 let introState = 0;
 let gameStarted = false;
 
 //Store high score
-let treatsData = {
+let score = 0;
+let data = {
   highScore: 0 // Set high score at 0 by default
 };
 
@@ -26,19 +27,28 @@ let robots = [];
 let numRobots = 2; //5?
 
 //Typography
+//Red
 let titleColor = {
   r: 255,
   g: 0,
   b: 0
 };
+//Gold
 let subtitleColor = {
   r: 255,
   g: 204,
   b: 0
 };
+//white
+let whiteColor = {
+  r: 255,
+  g: 255,
+  b: 255
+};
 
 //Store name variables in
 let dogNamesData = undefined;
+let dogTypeData = undefined;
 const DOGS_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/dogs.json`;
 let displayName = "stranger...";
 // // preload
@@ -63,9 +73,11 @@ function setup() {
   //Robot dog class
   for (let i = 0; i < numRobots; i++) {
     //Create new robot dog
-    let x = random(width);
-    let y = 0;
-    let robot = new Robot(x, y);
+    let x = random(0, width);
+    let y = random(0, height);
+    let headWidth = random(50, 70);
+    let headHeight = random(60, 80);
+    let robot = new Robot(x, y, headWidth, headHeight);
     //Add robot dog to the array of robot dogs
     robots.push(robot);
   }
@@ -75,7 +87,7 @@ function setup() {
 // //
 // // Description of draw() goes here.
 function draw() {
-  background(100);
+  background(255);
   //Call states
   if (state === `title`) {
     title();
@@ -103,13 +115,13 @@ function displayTitle() {
   textSize(400);
   text(`犬ヶ島`, width / 2, height / 2);
   pop();
-  //Isle of the Dogs - display title
+  //Isle of Dogs - display title
   push();
   textAlign(CENTER, CENTER);
   fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
   textSize(35);
   textFont(`Rockwell Std Condensed`);
-  text(`(Isle of the Dogs)`, width / 2, height / 2 + 250);
+  text(`(Isle of Dogs)`, width / 2, height / 2 + 250);
   pop();
 }
 
@@ -117,7 +129,7 @@ function introduction() {
   background(0);
 
   let randomDog = random(dogNamesData.dogs);
-  displayName = random(randomDog.name);
+  displayName = randomDog.name;
 
   push();
   textAlign(CENTER, CENTER);
@@ -129,21 +141,28 @@ function introduction() {
 
 function simulation() {
   noCursor();
+  displayScore();
   //Display dog.
   dog.display();
-  dog.wrap();
+
   //Display robot dogs
   for (let i = 0; i < robots.length; i++) {
     let robot = robots[i];
     robot.move();
     robot.display();
+    dog.interactWith(robot);
   }
+}
+
+function displayScore() {
+  displayText(`${score} points`);
 }
 
 function displayText(string) {
   push();
+  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
   textAlign(CENTER);
-  textSize(32);
+  textSize(100);
   textFont(`Rockwell Std Condensed`);
   // fill(255);
   text(string, width / 2, height / 2);
