@@ -60,7 +60,6 @@ class Robot {
   restart() {
     this.x = random(width);
     this.y = height;
-    score += 25;
   }
 
   display() {

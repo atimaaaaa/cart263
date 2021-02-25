@@ -20,11 +20,12 @@ let data = {
   highScore: 0 // Set high score at 0 by default
 };
 
-//Main dog
+//Objects
 let dog;
-//Robot dogs
 let robots = [];
-let numRobots = 2; //5?
+let numRobots = 5; //5?
+let treats = [];
+let numTreats = 3;
 
 //Typography
 //Red
@@ -51,6 +52,7 @@ let dogNamesData = undefined;
 let dogTypeData = undefined;
 const DOGS_DATA_URL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/dogs.json`;
 let displayName = "stranger...";
+
 // // preload
 // //
 // // Description of preload() goes here.
@@ -69,7 +71,6 @@ function setup() {
   let x = windowWidth / 2;
   let y = windowHeight / 2;
   dog = new Dog(x, y);
-
   //Robot dog class
   for (let i = 0; i < numRobots; i++) {
     //Create new robot dog
@@ -80,6 +81,15 @@ function setup() {
     let robot = new Robot(x, y, headWidth, headHeight);
     //Add robot dog to the array of robot dogs
     robots.push(robot);
+  }
+  //treats
+  for (let i = 0; i < numTreats; i++) {
+    //Create new robot dog
+    let x = random(0, width);
+    let y = random(0, height);
+    let treat = new Treat(x, y);
+    //Add robot dog to the array of robot dogs
+    treats.push(treat);
   }
 }
 
@@ -144,13 +154,18 @@ function simulation() {
   displayScore();
   //Display dog.
   dog.display();
-
   //Display robot dogs
   for (let i = 0; i < robots.length; i++) {
     let robot = robots[i];
     robot.move();
     robot.display();
     dog.interactWith(robot);
+  }
+  //Display treats
+  for (let i = 0; i < treats.length; i++) {
+    let treat = treats[i];
+    treat.display();
+    dog.eat(treat);
   }
 }
 

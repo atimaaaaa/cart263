@@ -46,7 +46,6 @@ class Dog {
       g: 240,
       b: 240
     };
-
     //Nose
     this.noseSize = 10;
     this.colorNose = {
@@ -59,9 +58,14 @@ class Dog {
   move() {
     this.x += this.vx;
     this.y += this.vy;
-    //constrain
-    this.x = constrain(this.x, 0, width - this.headWidth);
-    this.y = constrain(this.y, 0, height - this.headHeight);
+    // //constrain
+    // this.x = constrain(this.x, 0, width - this.headWidth);
+    // this.y = constrain(this.y, 0, height - this.headHeight);
+    if (this.x < 0) {
+      this.x = width;
+    } else if (this.x > width) {
+      this.x = 0;
+    }
   }
 
   //Attempts to attack the robot  provided as a parameter
@@ -72,7 +76,16 @@ class Dog {
     //if they overlap...
     if (d < this.size / 2 + robot.headWidth / 2) {
       //Add score if dog and robot overlap
+      score += 25;
       robot.restart();
+    }
+  }
+
+  eat(treat) {
+    let d = dist(this.x, this.y, treat.x, treat.y);
+    if (d < this.size / 2 + treat.size / 2) {
+      score += 25;
+      treat.reposition();
     }
   }
 
