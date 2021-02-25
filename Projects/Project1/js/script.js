@@ -12,11 +12,10 @@ Here is a description of this template p5 project.
 //Set the initial state
 let state = `simulation`;
 let introState = 0;
-let gameStarted = false;
 
 //Store high score
 let score = 0;
-let data = {
+let projectData = {
   highScore: 0 // Set high score at 0 by default
 };
 
@@ -66,12 +65,17 @@ function preload() {
 // // Description of setup() goes here.
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  //Main dog class
+  //Load the game data
+  let data = JSON.parse(localStorage.getItem(`project-data`));
+  //Check if there is a score already
+  if (data !== null) {
+    projectData = data;
+  }
+  //Setup the main dog class
   let x = windowWidth / 2;
   let y = windowHeight / 2;
   dog = new Dog(x, y);
-  //Robot dog class
+  //Setup the robot dog class
   for (let i = 0; i < numRobots; i++) {
     //Create new robot dog
     let x = random(0, width);
@@ -82,7 +86,7 @@ function setup() {
     //Add robot dog to the array of robot dogs
     robots.push(robot);
   }
-  //treats
+  //Setup the treat class
   for (let i = 0; i < numTreats; i++) {
     //Create new robot dog
     let x = random(0, width);
@@ -152,6 +156,9 @@ function introduction() {
 function simulation() {
   noCursor();
   displayScore();
+  displayHighScore();
+  checkScore();
+
   //Display dog.
   dog.display();
   //Display robot dogs
@@ -171,6 +178,29 @@ function simulation() {
 
 function displayScore() {
   displayText(`${score} points`);
+}
+
+function displayHighScore() {
+  push();
+  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
+  textAlign(RIGHT);
+  textSize(50);
+  textStyle(BOLD);
+  textFont(`Rockwell Std Condensed`);
+  text(
+    `High Score ${projectData.highScore}`,
+    windowWidth - 50,
+    windowHeight - 100
+  );
+  pop();
+}
+
+function checkScore() {
+  if (score > projectData.highScore) {
+    //Set a new high score
+    projectData.highScore = score;
+    localStorage.setItem(`project-data`, JSON.stringify(projectData));
+  }
 }
 
 function displayText(string) {
