@@ -3,18 +3,17 @@ class Dog {
   //
   //sets the dog class up
   constructor(x, y) {
+    //Position
     this.x = x;
     this.y = y;
+    this.vx = 0;
+    this.vy = 0;
     this.size = 50;
-    this.vx = 2;
-    this.vy = 2;
-    this.speed = 60;
-    this.growSpeed = 0.25;
-    //Wrap
-    this.borderLeft = 0;
-    this.borderRight = width;
-    this.borderTop = 0;
-    this.borderBottom = height;
+    //Speed
+    this.speed = 0;
+    this.maxSpeed = 2;
+    this.turnAngle = 0.5;
+    this.angle = 0;
     //Head
     this.headWidth = 50;
     this.headHeight = 60;
@@ -54,41 +53,69 @@ class Dog {
       b: 204
     };
   }
+  //commands
+  //
+  //"Attack!" - Makes the dog go forward
+  attack() {
+    this.speed += this.maxSpeed;
+  }
+  //"Stop" - Makes the dog stop its movement
+  stop() {
+    this.speed = 0;
+  }
+  //(Go) Left - Turns left
+  goLeft() {
+    this.angle -= this.turnAngle;
+  }
+  //(Go) right - Turns right
+  goRight() {
+    this.angle += this.turnAngle;
+  }
+
   //Dog movement
   move() {
+    let vx = this.speed * cos(this.angle);
+    let vy = this.speed * sin(this.angle);
+
     this.x += this.vx;
     this.y += this.vy;
-    // //constrain
-    // this.x = constrain(this.x, 0, width - this.headWidth);
-    // this.y = constrain(this.y, 0, height - this.headHeight);
-    if (this.x < 0) {
-      this.x = width;
-    } else if (this.x > width) {
-      this.x = 0;
+  }
+  wrap() {
+    if (this.x > width) {
+      this.x -= width;
+    } else if (this.x < 0) {
+      this.x += width;
+    }
+
+    if (this.y > height) {
+      this.y -= height;
+    } else if (this.y < 0) {
+      this.y += height;
     }
   }
 
-  //Attempts to attack the robot  provided as a parameter
-  //If interaction succeeds, the score will add up and the robot dog will restart from the bottom
+  //Attempt to attack the robot provided as a parameter
   interactWith(robot) {
     //Calculate the distance bwteen the dog and robot
     let d = dist(this.x, this.y, robot.x, robot.y);
     //if they overlap...
     if (d < this.size / 2 + robot.headWidth / 2) {
       //Add score if dog and robot overlap
-      score += 25;
+      score -= 25;
       robot.restart();
+      barkSFX.play();
     }
   }
-
+  //Attemp to eat a treat
   eat(treat) {
+    //Check distance
     let d = dist(this.x, this.y, treat.x, treat.y);
-    if (d < this.size / 2 + treat.size / 2) {
+    if (d < this.size / 2 + treat.size) {
       score += 25;
       treat.reposition();
     }
   }
-
+  //Displays the doggo
   display() {
     push();
     //Head
@@ -132,30 +159,29 @@ class Dog {
       this.y + this.headHeight / 2 + 10,
       this.noseSize
     ); //Left eye
-
     pop();
   }
-
-  keyPressed() {
-    //Horizontal movement
-    if (keyCode === LEFT_ARROW) {
-      this.vx = -this.speed;
-    } else if (keyCode === RIGHT_ARROW) {
-      this.vx = this.speed;
-    }
-    // No movement if left or right arrow are pressed.
-    else {
-      this.vx = 0;
-    }
-    //Vertical movement
-    if (keyCode === UP_ARROW) {
-      this.vy = -this.speed;
-    } else if (keyCode === DOWN_ARROW) {
-      this.vy = this.speed;
-    }
-    // No movement if up or bottom arrow are pressed.
-    else {
-      this.vy = 0;
-    }
-  }
+  // //Keys arrow keys to navigate with the doggo
+  // keyPressed() {
+  //   //Horizontal movement
+  //   if (keyCode === LEFT_ARROW) {
+  //     this.vx = -this.speed;
+  //   } else if (keyCode === RIGHT_ARROW) {
+  //     this.vx = this.speed;
+  //   }
+  //   // No movement if left or right arrow are pressed.
+  //   else {
+  //     this.vx = 0;
+  //   }
+  //   //Vertical movement
+  //   if (keyCode === UP_ARROW) {
+  //     this.vy = -this.speed;
+  //   } else if (keyCode === DOWN_ARROW) {
+  //     this.vy = this.speed;
+  //   }
+  //   // No movement if up or bottom arrow are pressed.
+  //   else {
+  //     this.vy = 0;
+  //   }
+  // }
 }

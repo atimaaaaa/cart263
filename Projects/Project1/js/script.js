@@ -2,7 +2,19 @@
 Isle of Dogs
 Atima Ng
 
-Here is a description of this template p5 project.
+Description.
+
+Commands:
+"Attack!"
+"STOP!"
+"(Go) left"
+"(Go) right"
+
+Credits:
+annyang - https://www.talater.com/annyang/
+Sand image - https://www.pinterest.ca/pin/366410119678636864/
+Sound effects - Étienne Dubé: https://soundcloud.com/e_dube
+Bark SFX - Provided by Pippin Barr
 **************************************************/
 "use strict";
 
@@ -26,15 +38,20 @@ let numRobots = 5; //5?
 let treats = [];
 let numTreats = 3;
 
+//Background
+let bgImage;
+//Sounds
+let barkSFX;
+
 //Typography
 //Red
-let titleColor = {
+let redColor = {
   r: 255,
   g: 0,
   b: 0
 };
 //Gold
-let subtitleColor = {
+let goldColor = {
   r: 255,
   g: 204,
   b: 0
@@ -45,7 +62,6 @@ let whiteColor = {
   g: 255,
   b: 255
 };
-
 //Store name variables in
 let dogNamesData = undefined;
 let dogTypeData = undefined;
@@ -56,6 +72,9 @@ let displayName = "stranger...";
 // //
 // // Description of preload() goes here.
 function preload() {
+  //Sounds
+  barkSFX = loadSound(`assets/sounds/bark.wav`);
+  //Data
   dogNamesData = loadJSON(`assets/data/dogNames.json`);
   dogTypeData = loadJSON(DOGS_DATA_URL);
 }
@@ -65,6 +84,8 @@ function preload() {
 // // Description of setup() goes here.
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //background
+  bgImage = loadImage(`assets/images/sand.jpg`);
   //Load the game data
   let data = JSON.parse(localStorage.getItem(`project-data`));
   //Check if there is a score already
@@ -95,13 +116,43 @@ function setup() {
     //Add robot dog to the array of robot dogs
     treats.push(treat);
   }
+  //Setup annyang
+  setupAnnyang();
+}
+
+//Setup annyang for the voice commands to control the dog
+function setupAnnyang() {
+  if (annyang) {
+    //Add Commands
+    let commands = {
+      Attack: function() {
+        dog.attack();
+      },
+      Stop: function() {
+        dog.stop();
+      },
+      "(Go) left": function() {
+        dog.goLeft();
+      },
+      "(Go) right": function() {
+        dog.goRight();
+      },
+      help: function() {
+        alert(
+          `Use your voice to control the dog to collect his treats. Prompts include: "Attack!", "Stop!"`
+        );
+      }
+    };
+    annyang.addCommands(commands);
+    annyang.start();
+  }
 }
 
 // // draw()
 // //
 // // Description of draw() goes here.
 function draw() {
-  background(255);
+  background(0);
   //Call states
   if (state === `title`) {
     title();
@@ -125,14 +176,14 @@ function displayTitle() {
   //犬ヶ島 - display title
   push();
   textAlign(CENTER, CENTER);
-  fill(titleColor.r, titleColor.g, titleColor.b);
+  fill(redColor.r, redColor.g, redColor.b);
   textSize(400);
   text(`犬ヶ島`, width / 2, height / 2);
   pop();
   //Isle of Dogs - display title
   push();
   textAlign(CENTER, CENTER);
-  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
+  fill(goldColor.r, goldColor.g, goldColor.b);
   textSize(35);
   textFont(`Rockwell Std Condensed`);
   text(`(Isle of Dogs)`, width / 2, height / 2 + 250);
@@ -154,12 +205,15 @@ function introduction() {
 }
 
 function simulation() {
-  noCursor();
+  background(bgImage);
+  // noCursor();
   displayScore();
   displayHighScore();
-  checkScore();
+  setScore();
 
   //Display dog.
+  dog.move();
+  dog.wrap();
   dog.display();
   //Display robot dogs
   for (let i = 0; i < robots.length; i++) {
@@ -176,13 +230,15 @@ function simulation() {
   }
 }
 
+//Displays the text for the current score
 function displayScore() {
   displayText(`${score} points`);
 }
 
+//Displays text for the high score
 function displayHighScore() {
   push();
-  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
+  fill(goldColor.r, goldColor.g, goldColor.b);
   textAlign(RIGHT);
   textSize(50);
   textStyle(BOLD);
@@ -195,7 +251,8 @@ function displayHighScore() {
   pop();
 }
 
-function checkScore() {
+//
+function setScore() {
   if (score > projectData.highScore) {
     //Set a new high score
     projectData.highScore = score;
@@ -205,7 +262,7 @@ function checkScore() {
 
 function displayText(string) {
   push();
-  fill(subtitleColor.r, subtitleColor.g, subtitleColor.b);
+  fill(goldColor.r, goldColor.g, goldColor.b);
   textAlign(CENTER);
   textSize(100);
   textFont(`Rockwell Std Condensed`);
@@ -215,6 +272,6 @@ function displayText(string) {
 }
 
 function keyPressed() {
-  dog.keyPressed();
+  // dog.keyPressed();
   dog.move();
 }
