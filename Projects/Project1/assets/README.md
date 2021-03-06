@@ -1,3 +1,7 @@
-# Assets folder
+Artist Statement
 
-The assets folder should contain all the non-code parts of your project. For now there are folders for image files and sound files. If you needed to use font files, for example, you would create another folder called `fonts` and put them in there.
+My project 1 for CART 263 is inspired by the movie Isle of Dogs.
+
+The movie tells the story of Atari who hijacks a plane and flies it to a Trash Island nicknamed Isle of Dogs. His plane crashes and he is rescued by a group of dogs, specifically Chief, Duke, Gondo, Boss and eventually the femme-fatale-dog Nutmeg. Atari is searching for Spots, the very famous blue-eyed dog, and the group of dogs help him. Later in the movie, Spots is found, but he is attacked by the evil government-owned metal Robot-Dogs. This key scene of the movie was my main inspiration for this project.
+
+I wanted to add my own artistic touch to this scene and integrated an introduction where the player is one of the main dogs in control to save Spots. The goal was to feel as it was the player's mission to guide Spots to safety using human voices to say specific commands, similar to the behaviour of an owner and a real dog. The idea of commands leads to Spot to behave according to the voice and arrows pressed on the keys, a combination making the game harder than your usual online game. Integrating the ability to use voice allows the user to feel immersed within the game environment and feel as if they are responsible for Spots safety. Being able to give real dog commands (e.g. stop, attack) makes it possible to interact with a digital dog, which I think is pretty neat. Overall, this project opened the doors for me to integrate libraries into my game, namely the ResponsiveVoice and Anngyang libraries, and JSON Data, which opened doors to many creative opportunities.

@@ -13,7 +13,7 @@ class Dog {
     this.speed = 0;
     this.maxSpeed = 2;
     this.turnAngle = 0.5;
-    this.angle = 0;
+    this.angle = random(0, TWO_PI);
     //Head
     this.headWidth = 50;
     this.headHeight = 60;
@@ -57,7 +57,7 @@ class Dog {
   //
   //"Attack!" - Makes the dog go forward
   attack() {
-    this.speed += this.maxSpeed;
+    this.speed = this.maxSpeed;
   }
   //"Stop" - Makes the dog stop its movement
   stop() {
@@ -80,13 +80,15 @@ class Dog {
     this.x += this.vx;
     this.y += this.vy;
   }
+  //Wrap dog to the canvas
   wrap() {
+    //x position
     if (this.x > width) {
       this.x -= width;
     } else if (this.x < 0) {
       this.x += width;
     }
-
+    //y position
     if (this.y > height) {
       this.y -= height;
     } else if (this.y < 0) {
@@ -98,24 +100,50 @@ class Dog {
   interactWith(robot) {
     //Calculate the distance bwteen the dog and robot
     let d = dist(this.x, this.y, robot.x, robot.y);
-    //if they overlap...
+    //Overlap between dog and robot
     if (d < this.size / 2 + robot.headWidth / 2) {
-      //Add score if dog and robot overlap
-      score -= 25;
+      //Checks the "Attack" directive
+      if (currentDirective === `Attack!`) {
+        score += 25;
+      } else {
+        score -= 25;
+      }
+      //Reposition the robots
+      currentDirective = random(directives);
       robot.restart();
+      //Plays BarkSFX
+      let randomRate = random(rates);
+      barkSFX.rate(randomRate);
       barkSFX.play();
     }
   }
-  //Attemp to eat a treat
+  //Attempts to eat a treat
   eat(treat) {
     //Check distance
     let d = dist(this.x, this.y, treat.x, treat.y);
     if (d < this.size / 2 + treat.size) {
       score += 25;
       treat.reposition();
+      treatSFX.play();
+      currentDirective = random(directives);
     }
   }
-  //Displays the doggo
+
+  checkDirectives() {
+    if (currentDirective === `Stay still!`) {
+      if (this.speed === 0) {
+        score += 25;
+        currentDirective = random(directives);
+      }
+    }
+  }
+
+  update() {
+    this.move();
+    this.wrap();
+    this.display();
+  }
+  //Display the doggo
   display() {
     push();
     //Head
@@ -159,29 +187,31 @@ class Dog {
       this.y + this.headHeight / 2 + 10,
       this.noseSize
     ); //Left eye
+    translate(this.x, this.y);
+    rotate(this.angle);
     pop();
   }
-  // //Keys arrow keys to navigate with the doggo
-  // keyPressed() {
-  //   //Horizontal movement
-  //   if (keyCode === LEFT_ARROW) {
-  //     this.vx = -this.speed;
-  //   } else if (keyCode === RIGHT_ARROW) {
-  //     this.vx = this.speed;
-  //   }
-  //   // No movement if left or right arrow are pressed.
-  //   else {
-  //     this.vx = 0;
-  //   }
-  //   //Vertical movement
-  //   if (keyCode === UP_ARROW) {
-  //     this.vy = -this.speed;
-  //   } else if (keyCode === DOWN_ARROW) {
-  //     this.vy = this.speed;
-  //   }
-  //   // No movement if up or bottom arrow are pressed.
-  //   else {
-  //     this.vy = 0;
-  //   }
-  // }
+  //Keys arrow keys to navigate with the doggo
+  keyPressed() {
+    //Horizontal movement
+    if (keyCode === LEFT_ARROW) {
+      this.vx = -this.speed;
+    } else if (keyCode === RIGHT_ARROW) {
+      this.vx = this.speed;
+    }
+    // No movement if left or right arrow are pressed.
+    else {
+      this.vx = 0;
+    }
+    //Vertical movement
+    if (keyCode === UP_ARROW) {
+      this.vy = -this.speed;
+    } else if (keyCode === DOWN_ARROW) {
+      this.vy = this.speed;
+    }
+    // No movement if up or bottom arrow are pressed.
+    else {
+      this.vy = 0;
+    }
+  }
 }

@@ -15,7 +15,7 @@ class Treat {
   }
   display() {
     push();
-    fill(255, 0, 0);
+    fill(goldColor.r, goldColor.g, goldColor.b);
     noStroke();
     ellipse(this.x, this.y, this.size);
     pop();
