@@ -63,20 +63,11 @@ class Dog {
   stop() {
     this.speed = 0;
   }
-  //(Go) Left - Turns left
-  goLeft() {
-    this.angle -= this.turnAngle;
-  }
-  //(Go) right - Turns right
-  goRight() {
-    this.angle += this.turnAngle;
-  }
 
   //Dog movement
   move() {
     let vx = this.speed * cos(this.angle);
     let vy = this.speed * sin(this.angle);
-
     this.x += this.vx;
     this.y += this.vy;
   }

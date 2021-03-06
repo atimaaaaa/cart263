@@ -5,8 +5,8 @@ class Robot {
     this.y = y;
     this.vx = 0;
     this.vy = 0;
-    this.speed = -0.01;
-    this.maxSpeed = 2; //10
+    this.speed = -0.005;
+    this.maxSpeed = 5;
     //Head
     this.headWidth = headWidth;
     this.headHeight = headHeight;

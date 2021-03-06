@@ -1,8 +1,8 @@
 /**************************************************
-Isle of Dogs
+Isle of Dogs - Project 1 CART263
 Atima Ng
 
-Description.
+To guide Spots, the user has to speak the commands "Attack" or "Stop" and press the arrows of the keyboard to move Spots. His goal is to grab as many treats and to avoid the Robot-Dogs when it is not necessary.
 
 Commands:
 "Attack!"
@@ -22,15 +22,8 @@ Bark SFX - Provided by Pippin Barr
 //
 //
 //Set the initial state
-let state = `title`;
+let state = `title`; // Possible states: title, simulation, win, lose
 let introState = 0;
-
-//Background
-let bgImage;
-//Sounds
-let barkSFX;
-let rates = [1, 1.5, 1.75, 2.25, 2.75, 3];
-let treatSFX;
 
 //List of directives
 let directives = [`Stay still!`, `Attack!`, `Treat!`];
@@ -42,6 +35,7 @@ let score = 0;
 let projectData = {
   highScore: 0 // Set high score at 0 by default
 };
+let timer = 80;
 
 //Store data
 let dogNamesData = undefined;
@@ -92,13 +86,22 @@ let greenColor = {
   b: 137
 };
 
+//Images variables
+let bgImage;
+//Audio variables
+let barkSFX;
+let rates = [1, 1.5, 1.75, 2.25, 2.75, 3];
+let treatSFX;
+let bgMusic;
+
 // // preload
 // //
 // // Description of preload() goes here.
 function preload() {
-  //Sounds
+  //Audio
   barkSFX = loadSound(`assets/sounds/bark.wav`);
   treatSFX = loadSound(`assets/sounds/score.mp3`);
+  bgMusic = loadSound(`assets/sounds/background.mp3`);
   //Data
   dogNamesData = loadJSON(`assets/data/dogNames.json`);
   dogTypeData = loadJSON(DOGS_DATA_URL);
@@ -145,7 +148,6 @@ function setProfile(data) {
 
 //Generates profile
 function generateProfile() {
-  // dogProfile.name = prompt(`What's your name?`);
   let password = random(dogTypeData.dogs);
   dogProfile.password = `${password}`;
 
@@ -207,11 +209,6 @@ function setupAnnyang() {
       },
       "(Go) right": function() {
         dog.goRight();
-      },
-      help: function() {
-        alert(
-          `Use your voice to control the dog to collect his treats. Prompts include: "Attack!", "Stop!"`
-        );
       }
     };
     annyang.addCommands(commands);
@@ -246,8 +243,8 @@ function title() {
     responsiveVoice.speak(`We need your help!`);
   } else if (introState === 2) {
     displayText(`We need your help to guide Spots to safety.
-We heard he was stuck fighting
-against the robo-dogs.`);
+He is surrounded by Robot-Dogs
+who want to harm him.`);
   } else if (introState === 3) {
     let profile = `** DOG PROFILE **
   Name: ${dogProfile.name}
@@ -265,31 +262,12 @@ against the robo-dogs.`);
   To stop: Yell "STOP" and press an arrow key.
   To attack: Yell "ATTACK" and use any the arrow keys.
 
-      Follow the proposed commands to save Spots from the robo-dogs!
+      Follow the proposed commands to save Spots from the Robot-dogs!
       `,
       windowWidth / 2,
       windowHeight / 2
     );
   }
-}
-
-//Displays the title sequences
-function displayTitle() {
-  //犬ヶ島 - display title
-  push();
-  textAlign(CENTER, CENTER);
-  fill(redColor.r, redColor.g, redColor.b);
-  textSize(400);
-  text(`犬ヶ島`, width / 2, height / 2);
-  pop();
-  //Isle of Dogs - display title
-  push();
-  textAlign(CENTER, CENTER);
-  fill(goldColor.r, goldColor.g, goldColor.b);
-  textSize(35);
-  textFont(`Rockwell Std Condensed`);
-  text(`(Isle of Dogs)`, width / 2, height / 2 + 250);
-  pop();
 }
 
 //Displays the simulation
@@ -298,9 +276,15 @@ function simulation() {
   noCursor();
   //Display score and directive
   displayDirective();
-  displayScore();
+  displayScoreTimer();
   displayInstructions();
   setScore();
+
+  //Plays background music in a loop when loaded
+  if (bgMusic.isPlaying() === false) {
+    bgMusic.loop();
+  }
+
   //Display dog.
   dog.checkDirectives();
   dog.update();
@@ -322,8 +306,10 @@ function simulation() {
 
 //Change to the win or lose state
 function changeState() {
-  if (score >= 50) {
+  if (score >= 500) {
     state = `win`;
+  } else if (timer === 0 || score < -25) {
+    state = `lose`;
   }
 }
 
@@ -332,19 +318,24 @@ function displayDirective() {
 }
 
 //Displays text for the high score
-function displayScore() {
+function displayScoreTimer() {
   push();
   fill(whiteColor.r, whiteColor.g, whiteColor.b);
   textAlign(RIGHT);
-  textSize(50);
+  textSize(35);
   textStyle(BOLD);
   textFont(`Rockwell Std Condensed`);
   text(
     `Current score ${score}
-    High Score ${projectData.highScore}`,
+    Goal 500
+    High Score ${projectData.highScore}
+    ${timer} seconds left`,
     windowWidth - 50,
-    windowHeight - 100
+    windowHeight - 200
   );
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer--;
+  }
   pop();
 }
 ///Displays instructions to the simulation
@@ -375,14 +366,31 @@ function win() {
 //Displays the lose screen
 function lose() {
   background(redColor.r, redColor.g, redColor.b);
-  displayMediumText(`TRY AGAIN.`);
+  displayMediumText(`TRY AGAIN`);
   responsiveVoice.speak(
     `Try again. Spot is still captured.`,
     `UK English Male`,
-    {
-      pitch: 1.5
-    }
+    { pitch: 1.5 }
   );
+}
+
+//Displays the title sequences
+function displayTitle() {
+  //犬ヶ島 - display title
+  push();
+  textAlign(CENTER, CENTER);
+  fill(redColor.r, redColor.g, redColor.b);
+  textSize(400);
+  text(`犬ヶ島`, width / 2, height / 2);
+  pop();
+  //Isle of Dogs - display title
+  push();
+  textAlign(CENTER, CENTER);
+  fill(goldColor.r, goldColor.g, goldColor.b);
+  textSize(35);
+  textFont(`Rockwell Std Condensed`);
+  text(`(Isle of Dogs)`, width / 2, height / 2 + 250);
+  pop();
 }
 
 function displayText(string) {
@@ -428,14 +436,13 @@ function keyPressed() {
   }
 }
 
+//
 function mousePressed() {
   if (currentDirective === `Click to see your first command!`) {
     currentDirective = random(directives);
   }
 }
 
-//mouseClicked()
-//
 //Advance in the introduction
 function mouseClicked() {
   if (state === `title`) {
