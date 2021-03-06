@@ -393,6 +393,7 @@ function displayTitle() {
   pop();
 }
 
+//Template to reuse text strings - Big
 function displayText(string) {
   push();
   fill(whiteColor.r, whiteColor.g, whiteColor.b);
@@ -403,7 +404,7 @@ function displayText(string) {
   text(string, width / 2, height / 2);
   pop();
 }
-
+//Template to reuse text strings - Medium
 function displayMediumText(string) {
   push();
   fill(whiteColor.r, whiteColor.g, whiteColor.b);
@@ -414,7 +415,7 @@ function displayMediumText(string) {
   text(string, width / 2, height / 2);
   pop();
 }
-
+//Template to reuse text strings - Small
 function displaySmallText(string) {
   push();
   fill(whiteColor.r, whiteColor.g, whiteColor.b);
@@ -436,7 +437,7 @@ function keyPressed() {
   }
 }
 
-//
+//Click to receive the command
 function mousePressed() {
   if (currentDirective === `Click to see your first command!`) {
     currentDirective = random(directives);

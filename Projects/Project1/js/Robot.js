@@ -1,4 +1,7 @@
 class Robot {
+  //constructor
+  //
+  //sets the robot-dog class up
   constructor(x, y, headWidth, headHeight) {
     //Position and size information
     this.x = x;

@@ -128,7 +128,7 @@ class Dog {
       }
     }
   }
-
+  //updates the dog
   update() {
     this.move();
     this.wrap();
