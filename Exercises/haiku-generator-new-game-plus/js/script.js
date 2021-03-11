@@ -20,18 +20,18 @@ let haikuTitle = [
 // Our pre-made haiku lines
 let haikuLines = {
   fiveSyllables: [
-    `O, to be a tree`,
-    `The cat does not know`,
-    `We are all forests`,
-    `You have done your best`,
-    `They are all gone now`
+    `O, to be alas free`,
+    `Will they ever know?`,
+    `We are all flowers`,
+    `They will notice`,
+    `Live and let go`
   ],
   sevenSyllables: [
-    `Say the things left unsaid`,
-    `Never believe the wind's lies`,
-    `The autumn stretches its legs`,
-    `Nothing can satisfy you`,
-    `They will not come back again`
+    `Walk between the trees`,
+    `Trust you can accomplish this`,
+    `Those who matter will stay`,
+    `Learn from all and everyone`,
+    `Fall down but rise again`
   ]
 };
 
