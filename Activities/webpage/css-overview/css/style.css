@@ -1,0 +1,35 @@
+h1 {
+  font-size: 5rem;
+}
+h1:hover{
+  font-size: 10rem;
+  color: red;
+}
+
+h2 {
+  color: #ff8888;
+}
+
+p {
+  color: darkgrey;
+}
+
+strong, em {
+  color: bisque;
+}
+
+#first-section {
+  background-color: aqua;
+}
+
+#second-section {
+  background-color: lightgoldenrodyellow;
+}
+
+.second-section-paragraph {
+  background-color: red;
+}
+
+.paragraph-text {
+  font-size: 0.5rem;
+}
