@@ -7,7 +7,7 @@ author, and this description to match your project!
 */
 "use strict";
 
-//Load music SFX
+//Play music SFX
 let play = function() {
   document.getElementById("audio").play();
 };
@@ -33,12 +33,12 @@ function setup() {
   // Set an interval of 500 milliseconds to attempt the revelation of secrets
   setInterval(revelation, UPDATE_FREQUENCY);
   //Button to toggle paragraph  display
-  $(`#button`).on(`click`, function(event) {
+  $(`#button`).on(`click`, function(eveNt) {
     $(`p`).toggle();
   });
   //Change button Text
   $(`#button`).on(`click`, function(event) {
-    $(this).hide();
+    $(this).toggleId();
   });
 }
 
