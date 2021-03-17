@@ -34,7 +34,7 @@ function setup() {
   setInterval(revelation, UPDATE_FREQUENCY);
   //Button to toggle paragraph  display
   $(`#button`).on(`click`, function(event) {
-    $(`p`).toggle();
+    $(`p`).fadeToggle(2000);
   });
 }
 
