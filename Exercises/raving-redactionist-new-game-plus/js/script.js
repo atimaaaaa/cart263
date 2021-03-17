@@ -7,6 +7,11 @@ author, and this description to match your project!
 */
 "use strict";
 
+//Load music SFX
+let play = function() {
+  document.getElementById("audio").play();
+};
+
 // The chance a span will be revealed per update
 const REVEAL_PROBABILITY = 0.1;
 // How often to update the spans (potentially revealing them)
@@ -27,6 +32,14 @@ function setup() {
   $secrets.on(`click`, redact);
   // Set an interval of 500 milliseconds to attempt the revelation of secrets
   setInterval(revelation, UPDATE_FREQUENCY);
+  //Button to toggle paragraph  display
+  $(`#button`).on(`click`, function(event) {
+    $(`p`).toggle();
+  });
+  //Change button Text
+  $(`#button`).on(`click`, function(event) {
+    $(this).hide();
+  });
 }
 
 /**
