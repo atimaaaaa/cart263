@@ -35,8 +35,14 @@
 
   <body>
     <!-- HTML would go here if needed. -->
+
     <!-- The poem, secret letters are in spans with class "secret" -->
     <section id="poem">
+      <!-- White box-->
+      <div id="draggable1" class="white-box">
+        <p>Drag me around!</p>
+      </div>
+
       <h2><span class="secret">T</span>his Is Just To Say</h2>
       <p>
         I <span class="secret">h</span>ave eaten<br />
@@ -62,6 +68,10 @@
     <!-- The secret answer area-->
 
     <section id="answer"></section>
+    <!-- White box-->
+    <div id="draggable1" class="white-box">
+      <p>Drag me around!</p>
+    </div>
     <!-- Start Dialog box pop up-->
     <div id="instruction-dialog" title="What am I looking at?????">
       <p>
@@ -75,6 +85,7 @@
         You are soooooo smart!
       </p>
     </div>
+
     <!-- My script(s) -->
     <script src="js/script.js"></script>
   </body>

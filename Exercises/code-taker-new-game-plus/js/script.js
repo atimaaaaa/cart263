@@ -19,7 +19,9 @@ let secret = `Theremin`;
 let popVFX = new Audio(`assets/sounds/pop.wav`);
 let tadaVFX = new Audio(`assets/sounds/tada.flac`);
 
+//Instructions
 $(`#instruction-dialog`).dialog({
+  modal: true,
   buttons: {
     "I'm Ready!": function() {
       $(this).dialog(`close`);
@@ -77,3 +79,5 @@ $(`#answer`).droppable({
     }
   }
 });
+
+$(`.white-box`).draggable();
