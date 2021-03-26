@@ -16,14 +16,23 @@ https://jqueryui.com
 //The secret message to solve!
 let secret = `Theremin`;
 //Audio elements
+let popVFX = new Audio(`assets/sounds/pop.wav`);
 let tadaVFX = new Audio(`assets/sounds/tada.flac`);
+
+$(`#instruction-dialog`).dialog({
+  buttons: {
+    "I'm Ready!": function() {
+      $(this).dialog(`close`);
+    }
+  }
+});
 
 $(`#solved-dialog`).dialog({
   //Dialog doesn't open at the start of the program
   autoOpen: false,
   //Add button
   buttons: {
-    "I know": function() {
+    "I know!!!!": function() {
       $(this).dialog(`close`);
     }
   }
@@ -35,7 +44,15 @@ $(`.secret`).on(`mouseover`, function(event) {
   //Draggable letter via a clone helper
   $(this).draggable({
     //Clones letter
-    helper: `clone`
+    helper: `clone`,
+    //Underlines letter when dragged
+    start: function(event, ui) {
+      $(this).css(`text-decoration`, `underline`);
+    },
+    //No underline when not dragged
+    stop: function(event, ui) {
+      $(this).css(`text-decoration`, `none`);
+    }
   });
 });
 
