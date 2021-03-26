@@ -1,5 +1,5 @@
 /**
-Code Taker
+Code Taker new game plus
 Atima Ng
 
 Uses:
@@ -15,6 +15,8 @@ https://jqueryui.com
 
 //The secret message to solve!
 let secret = `Theremin`;
+//Audio elements
+let tadaVFX = new Audio(`assets/sounds/tada.flac`);
 
 $(`#solved-dialog`).dialog({
   //Dialog doesn't open at the start of the program
@@ -54,6 +56,7 @@ $(`#answer`).droppable({
     if ($(`#answer`).text() === secret) {
       //Display dialog box
       $(`#solved-dialog`).dialog(`open`);
+      tadaVFX.play();
     }
   }
 });
