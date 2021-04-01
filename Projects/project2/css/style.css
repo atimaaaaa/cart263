@@ -1,3 +1,54 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: gopher,sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============= TYPOGRAPHY ==================== */
+.nav-link {
+  font-size: 160px;
+  font-family: "Editorial New",serif;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #279e61;
+  padding: 25px;
+  color: #f3cb6f;
+}
+
+.header {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.description{
+  font-family: gopher,sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  background: red;
+}
+
+.nav-link {
+
+}
+
 #disk1 {
   width: 400px;
   height:400px;
