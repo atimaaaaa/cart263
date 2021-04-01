@@ -35,3 +35,6 @@ let prompts = [
   "DID YOU ENJOY MY WEBSITE?",
   "PLS I'M DESPERATE I NEED A GIG ASAP"
 ];
+
+//Calls the setup function
+$(`#intro`).dialog();
