@@ -2,10 +2,12 @@
   margin:0;
   padding: 0;
   box-sizing: border-box;
+
   font-family: gopher,sans-serif;
   font-weight: 400;
   font-style: normal;
-  text-transform: uppercase;
+  text-decoration: none;
+  /* text-transform: uppercase; */
 }
 
 html {
@@ -13,21 +15,46 @@ html {
 }
 
 /* ============= TYPOGRAPHY ==================== */
+h2 {
+  font-size: 25px;
+}
+
+.logo {
+  font-size: 25px;
+}
+
 .nav-link {
   font-size: 160px;
   font-family: "Editorial New",serif;
   font-weight: 100;
   text-decoration: none;
+  display: flex;
+  text-transform: uppercase;
+  letter-spacing: -5px;
+
+  justify-content: space-between;
 }
 
+/* ============= COLOR ==================== */
+.red {
+  color: #f25b51;
+}
 
-body {
+.purple {
+  color: #7739ed;
+}
+
+.yellow {
+  color:  #f4ec6e;
+}
+
+/* ============= SECTIONS ==================== */
+.container {
   width: 100vw;
   height: 100vh;
   background: #279e61;
-  padding: 25px;
-  color: #f3cb6f;
 }
+
 
 .header {
   width: 100vw;
@@ -35,19 +62,24 @@ body {
   justify-content: space-between;
 }
 
-
-
 .description{
-  font-family: gopher,sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
   background: red;
+  width: 50vw;
 }
 
-.nav-link {
+#bottom-home {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 10px;
+  padding: 10px;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: yellow;
 }
+
 
 #disk1 {
   width: 400px;
