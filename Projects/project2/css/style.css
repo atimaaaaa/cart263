@@ -7,7 +7,8 @@
   font-weight: 400;
   font-style: normal;
   text-decoration: none;
-  /* text-transform: uppercase; */
+
+  color: #f4ec6e;
 }
 
 html {
@@ -15,8 +16,24 @@ html {
 }
 
 /* ============= TYPOGRAPHY ==================== */
+h1 {
+  font-size: 12rem;
+  font-family: "Editorial New",serif;
+  font-weight: 100;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: -5px;
+}
+
 h2 {
   font-size: 25px;
+  text-transform: uppercase;
+}
+
+p {
+  width:60vw;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .logo {
@@ -24,14 +41,15 @@ h2 {
 }
 
 .nav-link {
-  font-size: 160px;
+  font-size: 12rem;
   font-family: "Editorial New",serif;
   font-weight: 100;
   text-decoration: none;
-  display: flex;
   text-transform: uppercase;
   letter-spacing: -5px;
 
+  height: 20vh;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -48,22 +66,29 @@ h2 {
   color:  #f4ec6e;
 }
 
+.silver {
+  color: #e8e8e8;
+}
+
+.blue {
+  background: #869fef;
+}
+
+.green {
+  background: #279e61;
+}
 /* ============= SECTIONS ==================== */
 .container {
   width: 100vw;
   height: 100vh;
-  background: #279e61;
 }
 
-
 .header {
-  width: 100vw;
   display: flex;
   justify-content: space-between;
 }
 
 .description{
-  background: red;
   width: 50vw;
 }
 
@@ -72,13 +97,13 @@ h2 {
   height: auto;
   position: absolute;
   bottom: 10px;
-  padding: 10px;
+  /* padding: 10px; */
 
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  background: yellow;
 }
+
 
 
 #disk1 {
