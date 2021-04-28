@@ -38,11 +38,11 @@
   </head>
 
   <body>
-    <div class="container purpleBg">
+    <div class="container">
       <!-- NAV -->
       <section class="top">
         <div class="header">
-          <h1 class="silver">
+          <h1 id="colorRainbowText">
             TUNES
           </h1>
           <a href="index.html" class="logo">DJ TERRIBLE</a>
@@ -50,55 +50,24 @@
       </section>
 
       <h2>
-        Drag any disk around to listen to some of my tunes.**I need to add the
-        JavaScript to make this work
-      </h2>
+        1. Drag the party guests to the dance party.</br>
+        2. Explore different sceneries by choosing your favourite color.</br>
+        3. Enjoy tines from DJ TTERRIBLE!</h2>
+      <!-- COLOR PICKER -->
+      <input type="text" id="colorInputText" />
+      <input type="color" id="colorInputColor" />
+      <input
+        type="button"
+        id="colorButton"
+        value="Click to change party scene!!!"
+        onclick="changeColorBg()"
+      />
+      <div id="animalContainer">
+        <div class="draggable cow"></div>
+        <div class="draggable junimo"></div>
+      </div>
 
-      <section id="bottom-home">
-        <div class="bottom">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-            fringilla euismod nibh, at elementum velit viverra vel. Class aptent
-            taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-            himenaeos. Morbi nec ipsum pulvinar, condimentum nisi eu, egestas
-            enim. Nulla consequat justo luctus felis mattis, sit amet tincidunt
-            ante sollicitudin. In consequat neque eu diam sagittis, porttitor
-            suscipit ligula vehicula. Fusce non ultricies nunc. Donec vitae
-            feugiat mauris. Suspendisse ac nibh aliquam metus vestibulum
-            lacinia.
-          </p>
-          <p>
-            In vulputate vehicula mauris. Aliquam vitae aliquam lorem. Nullam
-            congue lectus nibh. Integer bibendum non tellus in vulputate. Etiam
-            consequat tempus augue. Phasellus risus ante, mattis quis finibus
-            nec, varius vitae libero. Nunc mollis, nunc eget mattis venenatis,
-            diam turpis congue nisl, quis gravida mi nulla eget purus. Praesent
-            eget molestie augue, id molestie magna. Curabitur viverra feugiat
-            auctor. In in ante nec purus lacinia sodales. Maecenas tempus
-            tincidunt ipsum in elementum. Nullam pharetra nulla justo, vitae
-            lacinia nibh accumsan id.
-          </p>
-          <p>
-            Ut in nisl eget sapien eleifend pellentesque. Donec commodo, diam at
-            commodo tempor, ante magna iaculis felis, sit amet rutrum metus ante
-            nec nisl. Duis ornare tellus ac lacus tincidunt, congue vestibulum
-            purus pulvinar. Morbi placerat est massa, vitae ultrices leo
-            porttitor ut. Nulla ornare ac mi pulvinar euismod. Nunc ac arcu ac
-            lectus scelerisque rutrum. In porta auctor sapien, non tristique
-            libero gravida sit amet. Aliquam erat volutpat. Aliquam commodo elit
-            tortor, a molestie sapien maximus a. Donec iaculis nec justo ut
-            tincidunt. Praesent ullamcorper turpis vitae orci fermentum, at
-            eleifend justo mattis. Nam sed nulla enim. Integer sollicitudin
-            tortor id elit eleifend ultricies. Sed fringilla dolor in mauris
-            semper, at fermentum arcu tincidunt.
-          </p>
-        </div>
-        <div>
-          <a href="#">💎</a>
-        </div>
-      </section>
-    </div>
     <!-- My script(s) -->
-    <script src="js/script.js"></script>
+    <script src="js/scriptTunes.js"></script>
   </body>
 </html>

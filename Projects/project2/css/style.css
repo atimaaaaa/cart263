@@ -3,6 +3,9 @@ This is the style file for this project.
 
 
 This page styles the main document.
+
+Cow dancing gif: https://www.nexusmods.com/stardewvalley/mods/3551/
+
 **********************************************/
 
 *{
@@ -119,4 +122,27 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-} 
+}
+
+/* ============= TUNES ==================== */
+/* ==== Position the cow ====== */
+
+.cow {
+  top: 50%;
+  left: 20%;
+  width: 100px;
+  height: 80px;
+  position: absolute !important;
+  background-image: url("https://media.giphy.com/media/4fHC1UPAgZ3LOf3nwX/giphy.gif");
+  background-size: auto 100%;
+}
+
+.junimo {
+  top: 30%;
+  right: 20%;
+  width: 90px;
+  height: 90px;
+  position: absolute !important;
+  background-image: url("https://media.giphy.com/media/SAWmzpOemqY9xdCr3o/giphy.gif");
+  background-size: auto 100%;
+}
