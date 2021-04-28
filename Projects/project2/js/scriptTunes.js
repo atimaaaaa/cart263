@@ -2,6 +2,7 @@
 DJ TERRIBLE PORTFOLIO
 Atima Ng
 
+The dance party code was inspired by Pippin Barr's "Beach party" example: https://github.com/pippinbarr/cart263-2021/tree/main/examples/jquery-ui/beach-party
 
 Uses:
 jQuery:
@@ -10,11 +11,18 @@ https://jquery.com
 jQuery UI:
 https://jqueryui.com
 
-The dance party code was inspired by Pippin Barr's "Beach party" example: https://github.com/pippinbarr/cart263-2021/tree/main/examples/jquery-ui/beach-party
+DJ Terrible song 1 (really wish i had the equipment to compose a TERRIBLE song... :( - https://freesound.org/people/QLC/sounds/69999/
+Shine SFX: https://freesound.org/people/InspectorJ/sounds/403005/
+
 
 */
 
 "use strict";
+
+//Audio setup. Stores the music into a variable.
+let bgMusic = new Audio("assets/audio/djTerrible1.mp3");
+bgMusic.pause();
+
 //Change color of the backgroung with a color picker
 function changeColorBg() {
   let color = document.getElementById("colorInputColor").value;
@@ -71,4 +79,13 @@ function stopDrag() {
     aspectRatio: true
   });
   $(this).resizable("enable");
+  handleMusic();
+}
+
+function handleMusic() {
+  if (bgMusic.paused) {
+    bgMusic.loop = true;
+    bgMusic.volume = 1;
+    bgMusic.play();
+  }
 }
