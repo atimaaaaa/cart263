@@ -40,7 +40,7 @@ function changeColorTitle() {
   txt.style.color = "RGB(" + r + ", " + g + ", " + b + ")";
 }
 
-//Function to start the resize
+//Function to start the blinking random color
 changeColorTitle();
 setInterval(changeColorTitle, 500);
 
@@ -61,14 +61,14 @@ $("#animalContainer").on("mouseout", ".resizable");
 //Starts the dragable element
 function startDrag() {
   $("#animalContainer").append($(this).clone());
-  $("this").removeClass("draggable");
+  $(this).removeClass("draggable");
   $(this).draggable("option", "start", undefined);
 }
 
 //Duplicates the draggable element when mouse is released
 function stopDrag() {
-  $(this).addClass("resizable");
   //Make draggable item resizable
+  $(this).addClass("resizable");
   $(this).resizable({
     aspectRatio: true,
     maxWidth: 400,

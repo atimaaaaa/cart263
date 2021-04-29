@@ -85,10 +85,12 @@ function closeDialog() {
   setTimeout(addDialog, delay);
 }
 
+//Takes random quote from the array
 function random(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+//Randomize the text
 function randomInRange(min, max) {
   return min + Math.random() * (max - min);
 }
