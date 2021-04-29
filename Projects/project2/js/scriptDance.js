@@ -20,6 +20,14 @@ Audio: https://freesound.org/people/stankbeast/sounds/342360/
 let bgMusic = new Audio("assets/audio/djTerrible2.mp3");
 bgMusic.pause();
 
+//Slider variables
+let volumeControl = document.getElementById("vol-control");
+
+//SLIDER
+volumeControl.addEventListener("change", function() {
+  bgMusic.volume = this.value / 100;
+});
+
 //Setup selectors
 const colorBtn = document.querySelector("#btn-1");
 const boxes = document.querySelectorAll(".box");
@@ -49,13 +57,25 @@ function startRandomColor() {
 //Changes color of the "dance floor" on click
 colorBtn.addEventListener("click", function() {
   colorBtn.innerText = "TURN IT DOWN...";
+  //When the "turn it down" button is pressed
   if (colorsChanging) {
     colorsChanging = false;
     colorBtn.innerText = "TURN IT UP!!!";
     bgMusic.pause();
-  } else {
+  }
+  //When "turn it up" button is pressed
+  else {
+    //CHanges color of tiles
     colorsChanging = true;
     startRandomColor();
+    //Plays bg music
     bgMusic.play();
+    bgMusic.volume = 0.2;
+    //Let responsive voice speak
+    responsiveVoice.speak(`Dance Dance Dance!`, `UK English Male`, {
+      pitch: 1,
+      rate: 1,
+      volume: 2
+    });
   }
 });
