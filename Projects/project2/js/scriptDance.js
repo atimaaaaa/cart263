@@ -16,10 +16,14 @@ Audio: https://freesound.org/people/stankbeast/sounds/342360/
 
 "use strict";
 
+//Load Audio
+let bgMusic = new Audio("assets/audio/djTerrible2.mp3");
+bgMusic.pause();
+
+//Setup selectors
 const colorBtn = document.querySelector("#btn-1");
 const boxes = document.querySelectorAll(".box");
-
-let playing = false;
+let colorsChanging = false;
 
 //Get random color hex code
 function randomColor() {
@@ -33,7 +37,7 @@ function randomColor() {
 
 //To add color to square boxes
 function startRandomColor() {
-  if (playing) {
+  if (colorsChanging) {
     boxes.forEach(color => {
       color.style.background = randomColor();
     });
@@ -45,11 +49,13 @@ function startRandomColor() {
 //Changes color of the "dance floor" on click
 colorBtn.addEventListener("click", function() {
   colorBtn.innerText = "TURN IT DOWN...";
-  if (playing) {
-    playing = false;
+  if (colorsChanging) {
+    colorsChanging = false;
     colorBtn.innerText = "TURN IT UP!!!";
+    bgMusic.pause();
   } else {
-    playing = true;
+    colorsChanging = true;
     startRandomColor();
+    bgMusic.play();
   }
 });
