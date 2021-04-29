@@ -67,21 +67,19 @@ function startDrag() {
 
 //Duplicates the draggable element when mouse is released
 function stopDrag() {
-  // if (
-  //   Math.abs($(this).position().top) > $(window).height() * 0.85 &&
-  //   Math.abs($(this).position().left) < 180
-  // ) {
-  //   $(this).remove();
-  //   return;
-  // }
   $(this).addClass("resizable");
+  //Make draggable item resizable
   $(this).resizable({
-    aspectRatio: true
+    aspectRatio: true,
+    maxWidth: 400,
+    autoHide: true,
+    ghost: true
   });
   $(this).resizable("enable");
   handleMusic();
 }
 
+//Plays bg music
 function handleMusic() {
   if (bgMusic.paused) {
     bgMusic.loop = true;
