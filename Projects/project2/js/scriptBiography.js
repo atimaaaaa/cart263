@@ -24,13 +24,7 @@ let audio1 = new Audio("assets/audio/recorder.wav");
 let audio2 = new Audio("assets/audio/ukulele.wav");
 let audio3 = new Audio("assets/audio/futurama.wav");
 let audio4 = new Audio("assets/audio/looppideeloop.wav");
-audio1.pause();
-audio2.pause();
-audio3.pause();
-audio4.pause();
-
-//Listen for a click to play audio
-let $drag = $(".ui-state-default");
+let audio5 = new Audio("assets/audio/mistakes.wav");
 
 //For the elements to be sortable.
 $(function() {
@@ -45,21 +39,31 @@ $(function() {
         audio2.pause();
         audio3.pause();
         audio4.pause();
+        audio5.pause();
       } else if (ui.item.hasClass("audio2")) {
         audio2.play();
         audio1.pause();
         audio3.pause();
         audio4.pause();
+        audio5.pause();
       } else if (ui.item.hasClass("audio3")) {
         audio3.play();
         audio1.pause();
         audio2.pause();
         audio4.pause();
+        audio5.pause();
       } else if (ui.item.hasClass("audio4")) {
         audio4.play();
         audio1.pause();
         audio2.pause();
         audio3.pause();
+        audio5.pause();
+      } else if (ui.item.hasClass("audio5")) {
+        audio5.play();
+        audio1.pause();
+        audio2.pause();
+        audio3.pause();
+        audio4.pause();
       }
     }
   });

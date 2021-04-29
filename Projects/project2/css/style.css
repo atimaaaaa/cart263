@@ -177,7 +177,7 @@ p {
   cursor: pointer;
   width: 200px;
   height: 50px;
-  margin: 20px 0;
+  margin: 20px 10px;
 }
 
 .btn:hover{
