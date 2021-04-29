@@ -151,11 +151,42 @@ p {
 }
 
 /* ============= DANCE PARTY ==================== */
-.disco-container {
+#disco-bg {
   background: radial-gradient(circle, rgba(50,50,50,1)
   0%, rgba(30,20,20,1)100%);
 }
 
-.btn  {
-  background: red;
+
+.btn{
+  background: lightblue;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  outline: none;
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+}
+
+.btn:hover{
+  background: transparent;
+  border: 2px solid white;
+  transition: 200ms;
+  transform: scale(1.1);
+  color: white;
+}
+
+.disco-container{
+  width: 100%;
+  height: 100%;
+  display:grid;
+  grid-template-columns: repeat(12,1fr);
+  z-index: -1;
+}
+
+.box {
+  padding: 5rem;
+  background: radial-gradient(circle, rgba(50,50,50,1)
+  0%, rgba(30,20,20,1)100%);
+
 }
